@@ -1,0 +1,16 @@
+* {
+	border: 1px solid black;
+}
+
+#timeControlsButtons, #timelineContainer {
+	float: left;
+}
+
+#timeControlsButtons {
+	width: 20%;
+}
+
+#timelineContainer {
+	width: 80%;
+}
+

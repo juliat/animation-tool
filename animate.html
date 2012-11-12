@@ -3,11 +3,34 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Animate</title>
-		<script src="animate.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<!-- libraries -->
+		<script type="text/javascript" src="doodle-library/utils.js"></script>
+		<script type="text/javascript" src="doodle-library/doodle-library.js"></script>
+		<script type="text/javascript" src="jquery.js"></script>
+		<!-- classes -->
+		<script type="text/javascript" src="AnimationArea.js"></script>
+		<script type="text/javascript" src="Timeline.js"></script>
+		<script type="text/javascript" src="App.js"></script>
 	</head>
 	<body>
-		<h2>(Try moving your mouse)</h2>
-        <canvas id="myCanvas" width="1024" height="768">
-        </canvas>
+		<div id="timeControls">
+			<div id="timeControlsButtons">
+				<button id="record">Record</button>
+				<button id="play">Play</button>
+			</div>
+			<div id="timelineContainer">
+				<span id="line"></span>
+			</div>
+		</div>
+		<div id="objectControls">
+			<ul id="objectsList">
+			</ul>
+			<div id="objectControlsButtons">
+				<button id="addObject">Add</button>
+			</div>
+		</div>
+		<div id="animationArea">
+		</div>
 	</body>
 </html>
