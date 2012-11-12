@@ -1,16 +1,33 @@
-* {
+body * {
 	border: 1px solid black;
 }
 
-#timeControlsButtons, #timelineContainer {
+* {
+	box-sizing: border-box;
+}
+
+#timeControlsButtons, #objectControls {
+	width: 20%;
 	float: left;
 }
 
-#timeControlsButtons {
-	width: 20%;
-}
-
-#timelineContainer {
+#timelineContainer, #animationArea {
 	width: 80%;
+	float: left;
 }
 
+#timelineContainer, #timeControlsButtons {
+	height: 4em;
+}
+
+#objectControls, #animationArea {
+	height: 40em;
+}
+
+#objectControls {
+	clear: both;
+}
+
+#animationArea {
+	clear: top;
+}
