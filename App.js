@@ -28,8 +28,8 @@ function App() {
 	var addAnimatedObjectButton = document.getElementById('addObject');
 	addAnimatedObjectButton.addEventListener('click', function(e){
 		e.preventDefault();
-		console.log('click');
-		$('#myModal').reveal();
+		console.log('hey');
+		$('#addObjectModal').reveal();
 	});
 
 	// set up animatedObject control panel

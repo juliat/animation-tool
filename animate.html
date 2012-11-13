@@ -31,15 +31,19 @@
 			<ul id="objectsList">
 			</ul>
 			<div id="objectControlsButtons">
-				<button id="addObject" data-reveal-id="myModal">Add</button>
+				<button id="addObject" data-reveal-id="addObjectModal">Add</button>
 			</div>
 		</div>
 		<div id="animationArea">
 		</div>
 
-		<div id="myModal" class="reveal-modal">
-			<h1>Reveal Modal Goodness</h1>
-			<p>This is a default modal in all its glory, but any of the styles here can easily be changed in the CSS.</p>
+		<div id="addObjectModal" class="reveal-modal">
+			<h1>Upload a new image for your animation here</h1>
+			<form>
+				<label>Name</label>
+				<input type="text">
+				<label>Image File</label>
+				<input type="file">
 			<a class="close-reveal-modal">&#215;</a>
 		</div>
 	</body>
