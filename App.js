@@ -1,5 +1,6 @@
 window.onload = function() {
 	// create a new instance of App
+	var app = new App();
 };
 
 /* Application Class 
@@ -17,11 +18,19 @@ function App() {
 
 	// initialize the animationArea
 	var animationAreaElement = document.getElementById("animationArea");
-	this.animationArea = new AnimationArea(animationAreaElement);
+	// this.animationArea = new AnimationArea(animationAreaElement);
 
 	// initialize record, play buttons
 	var recordButtonElement = document.getElementById('recordButton');
-	this.recordbutton = new Button(recordButtonElement);
+	// this.recordbutton = new Button(recordButtonElement);
+
+	// initialize add object button
+	var addAnimatedObjectButton = document.getElementById('addObject');
+	addAnimatedObjectButton.addEventListener('click', function(e){
+		e.preventDefault();
+		console.log('click');
+		$('#myModal').reveal();
+	});
 
 	// set up animatedObject control panel
 }
@@ -34,6 +43,11 @@ App.prototype.record = function(params) {
 
 App.prototype.play = function(params) {
 	// command all objects to animate themselves, make sure time offsets work
+}
+
+// upload a new image to animate
+App.prototype.addAnimatedObject = function() {
+
 }
 
 

@@ -5,11 +5,14 @@
 		<title>Animate</title>
 		<link rel="stylesheet" type="text/css" href="reset.css">
 		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="stylesheet" type="text/css" href="reveal.css">
 		<!-- libraries -->
 		<script type="text/javascript" src="doodle-library/utils.js"></script>
 		<script type="text/javascript" src="doodle-library/doodle-library.js"></script>
 		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="jquery.reveal.js"></script>
 		<!-- classes -->
+		<script type="text/javascript" src="AnimatedObject.js"></script>
 		<script type="text/javascript" src="AnimationArea.js"></script>
 		<script type="text/javascript" src="Timeline.js"></script>
 		<script type="text/javascript" src="App.js"></script>
@@ -28,10 +31,16 @@
 			<ul id="objectsList">
 			</ul>
 			<div id="objectControlsButtons">
-				<button id="addObject">Add</button>
+				<button id="addObject" data-reveal-id="myModal">Add</button>
 			</div>
 		</div>
 		<div id="animationArea">
+		</div>
+
+		<div id="myModal" class="reveal-modal">
+			<h1>Reveal Modal Goodness</h1>
+			<p>This is a default modal in all its glory, but any of the styles here can easily be changed in the CSS.</p>
+			<a class="close-reveal-modal">&#215;</a>
 		</div>
 	</body>
 </html>
