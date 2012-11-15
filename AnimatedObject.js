@@ -19,14 +19,22 @@ AnimatedObject.prototype.addToAnimatedArea = function() {
 						'" class="draggable" ' + 
 						'" src="' + this.sprites[0] + 
 						'" />');
+
+	var animatedObject = this;
 	// make draggable
 	$('#'+this.objectName).draggable({
+		startMoveTime: 0,
 		start: function(event) {
-			console.log('start drag');
-			// start counting time
+			animatedObject.animation = []; // clear out animation list
+			startMoveTime = event.timeStamp;
 		},
 		drag: function(event) {
-			console.log(this.style.top + ', ' + this.style.left + ' ' + event.timeStamp);
+			var movement = {
+				left : this.style.left,
+				top : this.style.top,
+				deltaTimestamp : event.timeStamp - startMoveTime
+			}
+			animatedObject.recordMovement(movement);
 		}
 	});
 }
@@ -39,6 +47,7 @@ AnimatedObject.prototype.playAnimation = function(params) {
 
 }
 
-AnimatedObject.prototype.recordAnimation = function() {
-
+AnimatedObject.prototype.recordMovement = function(movement) {
+	this.animation.push(movement);
+	console.log(this.animation);
 }
