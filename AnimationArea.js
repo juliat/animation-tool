@@ -15,6 +15,4 @@ function AnimationArea() {
 AnimationArea.prototype.addAnimatedObject = function(animatedObject) {
 	this.animatedObjects.push(animatedObject);
 	this.objectsListControl.append('<li>'+ animatedObject.objectName + '</li>');
-	this.areaElement.append('<img alt="' + animatedObject.objectName + '" id="' + 
-		animatedObject.objectName + '" src="' + animatedObject.sprites[0] + '" />');
 };
