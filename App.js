@@ -1,7 +1,8 @@
+var time = new Date();
+
 window.onload = function() {
 	// create a new instance of App
 	var app = new App();
-
 	// create new object to animate for testing
 	app.addAnimatedObject();
 

@@ -20,7 +20,15 @@ AnimatedObject.prototype.addToAnimatedArea = function() {
 						'" src="' + this.sprites[0] + 
 						'" />');
 	// make draggable
-	$('#'+this.objectName).draggable();
+	$('#'+this.objectName).draggable({
+		start: function(event) {
+			console.log('start drag');
+			// start counting time
+		},
+		drag: function(event) {
+			console.log(this.style.top + ', ' + this.style.left + ' ' + event.timeStamp);
+		}
+	});
 }
 
 AnimatedObject.prototype.addSprite =  function(params) {
@@ -31,6 +39,6 @@ AnimatedObject.prototype.playAnimation = function(params) {
 
 }
 
-AnimatedObject.prototype.recordAnimation = function(params) {
+AnimatedObject.prototype.recordAnimation = function() {
 
 }
