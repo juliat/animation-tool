@@ -1,6 +1,7 @@
 /* Timeline class */
-function Timeline(domElement) {
-	this.line = document.getElementById();
+function Timeline() {
+	this.timelineElement = document.getElementById("timeline");
+	//this.line = document.getElementById();
 }
 
 Timeline.prototype.rollTime = function(params) {

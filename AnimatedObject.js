@@ -7,10 +7,10 @@ function AnimatedObject(name, imageFile) {
 	this.sprites = [];
 	this.sprites.push(imageFile);
 	this.startMoveTime = 0;
-	this.animationStates = [];
+	this.animation = [];
 }
 
-AnimatedObject.prototype.addFile =  function(params) {
+AnimatedObject.prototype.addSprite =  function(params) {
 	
 }
 

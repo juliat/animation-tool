@@ -1,6 +1,10 @@
 window.onload = function() {
 	// create a new instance of App
 	var app = new App();
+
+	// create new object to animate for testing
+	app.addAnimatedObject();
+
 };
 
 /* Application Class 
@@ -13,12 +17,10 @@ function App() {
 	this.playing = false;
 
 	// initialize the Timeline object
-	var timelineElement = document.getElementById("timeline");
-	this.timeline = new Timeline(timelineElement);
+	this.timeline = new Timeline();
 
 	// initialize the animationArea
-	var animationAreaElement = document.getElementById("animationArea");
-	// this.animationArea = new AnimationArea(animationAreaElement);
+	this.animationArea = new AnimationArea();
 
 	// initialize record, play buttons
 	var recordButtonElement = document.getElementById('recordButton');
@@ -47,7 +49,8 @@ App.prototype.play = function(params) {
 
 // upload a new image to animate
 App.prototype.addAnimatedObject = function() {
-
+	var animatedObj = new AnimatedObject("StickMan", "animated-images/stick-figure.jpg");
+	this.animationArea.addAnimatedObject(animatedObj);
 }
 
 
