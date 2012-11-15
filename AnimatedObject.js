@@ -43,8 +43,17 @@ AnimatedObject.prototype.addSprite =  function(params) {
 	
 }
 
-AnimatedObject.prototype.playAnimation = function(params) {
+AnimatedObject.prototype.playAnimation = function() {
+	var numMovements = this.animation.length;
+	var timeout = 1;
+	for (i=0; i < numMovements; i++) {
 
+	}
+}
+
+AnimatedObject.prototype.performMovement = function(movement) {
+	this.imageElement.left = movement['left'];
+	this.imageElement.top = movement['top'];
 }
 
 AnimatedObject.prototype.recordMovement = function(movement) {
