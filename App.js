@@ -34,8 +34,6 @@ function App() {
 		console.log('hey');
 		$('#addObjectModal').reveal();
 	});
-
-	// set up animatedObject control panel
 }
 
 App.prototype.record = function(params) {

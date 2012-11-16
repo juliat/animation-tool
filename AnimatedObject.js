@@ -9,7 +9,7 @@ function AnimatedObject(name, imageFile) {
 	this.startMoveTime = 0;
 	this.animation = [];
 	this.addToAnimatedArea();
-	this.imageElement = $('#' + name);
+	this.imageElement = $('#' + this.objectName);
 }
 
 AnimatedObject.prototype.addToAnimatedArea = function() {
@@ -35,6 +35,8 @@ AnimatedObject.prototype.addToAnimatedArea = function() {
 				deltaTimestamp : event.timeStamp - startMoveTime
 			}
 			animatedObject.recordMovement(movement);
+		},
+		stop: function() {
 		}
 	});
 }
@@ -44,16 +46,25 @@ AnimatedObject.prototype.addSprite =  function(params) {
 }
 
 AnimatedObject.prototype.playAnimation = function() {
+	console.log('play');
 	var numMovements = this.animation.length;
 	var timeout = 1;
-	for (i=0; i < numMovements; i++) {
-
+	var animatedObject = this;
+	for (i=1; i < numMovements; i++) {
+		var movement = this.animation[i];
+		var lastMovement = this.animation[i-1];
+		var timeTilMove = movement['deltaTimestamp'] - lastMovement['deltaTimestamp'];
+		setTimeout(animatedObject.performMovement(movement), timeTilMove);
 	}
 }
 
 AnimatedObject.prototype.performMovement = function(movement) {
-	this.imageElement.left = movement['left'];
-	this.imageElement.top = movement['top'];
+	var imageElement = $('#' + this.objectName);
+	console.log(movement['left'] + ', ' + movement['top']);
+	imageElement.css({
+		'left': movement['left'],
+		'top': movement['top']
+	});
 }
 
 AnimatedObject.prototype.recordMovement = function(movement) {
