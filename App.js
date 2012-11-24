@@ -29,9 +29,14 @@ function App() {
 
 	var playButtonElement = document.getElementById('play');
 	playButtonElement.addEventListener('click', function() {
-		// debugger;
 		animationArea.playAllAnimations();
-	})
+	});
+
+	// temporary button
+	var pauseButtonElement = document.getElementById('pause');
+	pauseButtonElement.addEventListener('click', function() {
+		animationArea.pauseAllAnimations();
+	});
 
 	this.objectsListControl = $("#objectsList");
 

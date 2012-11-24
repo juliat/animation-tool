@@ -91,17 +91,17 @@ AnimatedObject.prototype.addSprite =  function(params) {
 
 AnimatedObject.prototype.playAnimation = function() {
 	console.log('play');
-	// debugger;
+	this.paused = false;
 	var numMovements = this.animation.length;
-	var timeout = 1;
-	var animatedObject = this;
 	var i = 1;
-	while ((i < numMovements) && (this.paused === false)) {
+	while (i < numMovements) {
 		var movement = this.animation[i];
 		var lastMovement = this.animation[i-1];
 		var duration = movement['deltaTimestamp'] - lastMovement['deltaTimestamp'];
 		movement['duration'] = duration;
-		animatedObject.performMovement(movement);
+		if (this.paused === false) {
+			this.performMovement(movement);
+		}
 		i++;
 	}
 }

@@ -9,7 +9,7 @@ function AnimationArea() {
 	this.areaElement = $("#animationArea");
 	this.animatedObjects = [];
 	this.currentTime = 0;
-}
+};
 
 AnimationArea.prototype.addAnimatedObject = function(animatedObject) {
 	this.animatedObjects.push(animatedObject);
@@ -24,4 +24,17 @@ AnimationArea.prototype.playAllAnimations = function() {
 		var animatedObject = this.animatedObjects[i];
 		animatedObject.playAnimation();
 	}
-}
+};
+
+AnimationArea.prototype.pauseAllAnimations = function() {
+	debugger;
+	var i;
+	for (i=0; i < this.animatedObjects.length; i++) {
+		var animatedObject = this.animatedObjects[i];
+		animatedObject.pauseAnimation();
+	}
+};
+
+AnimationArea.prototype.mapToAllAnimations = function(functionToMap) {
+
+};
