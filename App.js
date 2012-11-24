@@ -5,6 +5,8 @@ window.onload = function() {
 	app = new App();
 	// create new object to animate for testing
 	app.addAnimatedObjects();
+
+	app.timeline.createThumbnail();
 };
 
 /* Application Class 
