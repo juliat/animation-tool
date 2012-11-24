@@ -8,24 +8,14 @@ function AnimatedObject(name, imageFile) {
 	this.sprites.push(imageFile);
 	this.startMoveTime = 0;
 	this.animation = [];
+	this.objectController = null;
 	this.addToAnimatedArea();
 	this.imageElement = $('#' + this.objectName);
 	this.paused = false; // might delete this
-
-
-	// create a controller for this animated object	
-	var objectControllerId = this.objectName + 'Controller';
-	app.objectsListControl.append('<li id="' + objectControllerId + '">'+ this.objectName + '</li>');
-	this.objectController = $('#'+ objectControllerId);
-
-	this.objectController.bind('click', function(e) {
-		console.log('clicked '+ name +' controller');
-	});
-
 }
 
 AnimatedObject.prototype.addToAnimatedArea = function() {
-	areaElement = $("#animationArea");
+	var areaElement = $("#animationArea");
 	areaElement.append('<img alt="' + this.objectName + 
 						'" id="' + 	this.objectName + 
 						'" class="draggable" ' + 
@@ -49,6 +39,32 @@ AnimatedObject.prototype.addToAnimatedArea = function() {
 			}
 			animatedObject.recordMovement(movement);
 		},
+	});
+
+	this.createController();
+}
+
+AnimatedObject.prototype.createController = function() {
+	// create a controller for this animated object	
+	var objectControllerId = this.objectName + 'Controller';
+
+	// could not use app var here and just go straight to DOM. tradeoffs?
+	app.objectsListControl.append('<li id="' + objectControllerId + '">'+ this.objectName + '</li>');
+	this.objectController = $('#'+ objectControllerId);
+
+	var animatedObj = this;
+
+	// bind a click selection event to the controller
+	this.objectController.bind('click', function(e) {
+		console.log('clicked '+ objectControllerId);
+
+		// deselect and disable all draggable objects
+		$('#objectsList li').removeClass('selected');
+		$('.ui-draggable').draggable('disable');
+		
+		// and only select and enable this one
+		$(this).addClass('selected');
+		animatedObj.imageElement.draggable('enable');
 	});
 }
 
@@ -79,7 +95,6 @@ AnimatedObject.prototype.pauseAnimation = function() {
 
 AnimatedObject.prototype.performMovement = function(movement) {
 	var imageElement = $('#' + this.objectName);
-	console.log(movement['left'] + ', ' + movement['top']);
 	imageElement.animate(
 		{
 		'left': movement['left'],
@@ -91,5 +106,4 @@ AnimatedObject.prototype.performMovement = function(movement) {
 
 AnimatedObject.prototype.recordMovement = function(movement) {
 	this.animation.push(movement);
-	console.log(this.animation);
 }

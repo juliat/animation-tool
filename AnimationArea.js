@@ -7,7 +7,6 @@ when things get uploaded, they get added here
 function AnimationArea() {
 	// hold onto animated objects
 	this.areaElement = $("#animationArea");
-	this.objectsListControl = $("#objectsList");
 	this.animatedObjects = [];
 	this.currentTime = 0;
 }
