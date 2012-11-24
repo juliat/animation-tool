@@ -14,7 +14,6 @@ function AnimationArea() {
 
 AnimationArea.prototype.addAnimatedObject = function(animatedObject) {
 	this.animatedObjects.push(animatedObject);
-	this.objectsListControl.append('<li>'+ animatedObject.objectName + '</li>');
 };
 
 /* iterates over all animated objects in the animation area

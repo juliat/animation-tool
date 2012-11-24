@@ -10,6 +10,18 @@ function AnimatedObject(name, imageFile) {
 	this.animation = [];
 	this.addToAnimatedArea();
 	this.imageElement = $('#' + this.objectName);
+	this.paused = false; // might delete this
+
+
+	// create a controller for this animated object	
+	var objectControllerId = this.objectName + 'Controller';
+	app.objectsListControl.append('<li id="' + objectControllerId + '">'+ this.objectName + '</li>');
+	this.objectController = $('#'+ objectControllerId);
+
+	this.objectController.bind('click', function(e) {
+		console.log('clicked '+ name +' controller');
+	});
+
 }
 
 AnimatedObject.prototype.addToAnimatedArea = function() {
@@ -21,9 +33,10 @@ AnimatedObject.prototype.addToAnimatedArea = function() {
 						'" />');
 
 	var animatedObject = this;
-	// make draggable
+	// make draggable within the animation area
 	$('#'+this.objectName).draggable({
 		startMoveTime: 0,
+		containment: "#animationArea",
 		start: function(event) {
 			animatedObject.animation = []; // clear out animation list
 			startMoveTime = event.timeStamp;
@@ -36,8 +49,6 @@ AnimatedObject.prototype.addToAnimatedArea = function() {
 			}
 			animatedObject.recordMovement(movement);
 		},
-		stop: function() {
-		}
 	});
 }
 
@@ -51,13 +62,19 @@ AnimatedObject.prototype.playAnimation = function() {
 	var numMovements = this.animation.length;
 	var timeout = 1;
 	var animatedObject = this;
-	for (i=1; i < numMovements; i++) {
+	var i = 1;
+	while ((i < numMovements) && (this.paused === false)) {
 		var movement = this.animation[i];
 		var lastMovement = this.animation[i-1];
 		var duration = movement['deltaTimestamp'] - lastMovement['deltaTimestamp'];
 		movement['duration'] = duration;
 		animatedObject.performMovement(movement);
+		i++;
 	}
+}
+
+AnimatedObject.prototype.pauseAnimation = function() {
+	this.paused = true;
 }
 
 AnimatedObject.prototype.performMovement = function(movement) {

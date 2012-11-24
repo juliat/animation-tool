@@ -2,10 +2,9 @@ var time = new Date();
 
 window.onload = function() {
 	// create a new instance of App
-	var app = new App();
+	app = new App();
 	// create new object to animate for testing
-	app.addAnimatedObject();
-
+	app.addAnimatedObjects();
 };
 
 /* Application Class 
@@ -34,6 +33,7 @@ function App() {
 		animationArea.playAllAnimations();
 	})
 
+	this.objectsListControl = $("#objectsList");
 
 	// initialize add object button
 	var addAnimatedObjectButton = document.getElementById('addObject');
@@ -55,9 +55,16 @@ App.prototype.play = function(params) {
 }
 
 // upload a new image to animate
-App.prototype.addAnimatedObject = function() {
-	var animatedObj = new AnimatedObject("StickMan", "animated-images/stick-figure.jpg");
-	this.animationArea.addAnimatedObject(animatedObj);
+App.prototype.addAnimatedObjects = function() {
+	var objects = [
+		{'name': "StickMan", 'file': "animated-images/stick-figure.jpg"},
+		{'name': "Tardis", 'file': "animated-images/tardis.png"}
+	];
+	var i;
+	for (i=0; i < objects.length; i++) {
+		var animatedObj = new AnimatedObject(objects[i]['name'], objects[i]['file']);
+		this.animationArea.addAnimatedObject(animatedObj);
+	}
 }
 
 
