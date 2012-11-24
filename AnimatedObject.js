@@ -6,11 +6,10 @@ function AnimatedObject(name, imageFile) {
 	// these are hardcoded defaults for now
 	this.sprites = [];
 	this.sprites.push(imageFile);
-	this.startMoveTime = 0;
 	this.animation = [];
 	this.objectController = null;
+	this.imageElement = null;
 	this.addToAnimatedArea();
-	this.imageElement = $('#' + this.objectName);
 	this.paused = false; // might delete this
 }
 
@@ -22,24 +21,39 @@ AnimatedObject.prototype.addToAnimatedArea = function() {
 						'" src="' + this.sprites[0] + 
 						'" />');
 
+	this.imageElement = $('#'+this.objectName);
+
 	var animatedObject = this;
-	// make draggable within the animation area
-	$('#'+this.objectName).draggable({
-		startMoveTime: 0,
-		containment: "#animationArea",
-		start: function(event) {
-			animatedObject.animation = []; // clear out animation list
-			startMoveTime = event.timeStamp;
-		},
-		drag: function(event) {
-			var movement = {
-				left : this.style.left,
-				top : this.style.top,
-				deltaTimestamp : event.timeStamp - startMoveTime
+
+	this.imageElement
+		// make draggable within the animation area
+		.draggable({
+			startMoveTime: 0,
+			containment: "#animationArea",
+			start: function(event) {
+				animatedObject.animation = []; // clear out animation list
+				startMoveTime = event.timeStamp;
+			},
+			drag: function(event) {
+				var movement = {
+					left : this.style.left,
+					top : this.style.top,
+					deltaTimestamp : event.timeStamp - startMoveTime
+				}
+				animatedObject.recordMovement(movement);
+			},
+			end: function(event) {
+				animatedObject.totalAnimationDuration = event.timeStamp - startMoveTime;
+				console.log(animatedObject.totalAnimationDuration);
 			}
-			animatedObject.recordMovement(movement);
-		},
-	});
+		})
+		// also bind the select method to the click event for the image
+		.bind('click', function(){
+			animatedObject.select();
+		});
+
+	
+
 
 	this.createController();
 }
@@ -55,17 +69,20 @@ AnimatedObject.prototype.createController = function() {
 	var animatedObj = this;
 
 	// bind a click selection event to the controller
-	this.objectController.bind('click', function(e) {
+	this.objectController.bind('click', function() {
 		console.log('clicked '+ objectControllerId);
-
-		// deselect and disable all draggable objects
-		$('#objectsList li').removeClass('selected');
-		$('.ui-draggable').draggable('disable');
-		
-		// and only select and enable this one
-		$(this).addClass('selected');
-		animatedObj.imageElement.draggable('enable');
+		animatedObj.select();
 	});
+}
+
+AnimatedObject.prototype.select = function() {
+	// deselect and disable all draggable objects
+	$('#objectsList li').removeClass('selected');
+	$('.ui-draggable').draggable('disable');
+	
+	// and only select and enable this one
+	this.objectController.addClass('selected');
+	this.imageElement.draggable('enable');	
 }
 
 AnimatedObject.prototype.addSprite =  function(params) {
