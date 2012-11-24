@@ -31,3 +31,7 @@ body * {
 #animationArea {
 	clear: top;
 }
+
+#objectsList .selected {
+	background-color: lightgreen;
+}
