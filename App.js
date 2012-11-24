@@ -21,11 +21,19 @@ function App() {
 	this.timeline = new Timeline();
 
 	// initialize the animationArea
-	this.animationArea = new AnimationArea();
+	var animationArea = new AnimationArea();
+	this.animationArea = animationArea;
 
 	// initialize record, play buttons
-	var recordButtonElement = document.getElementById('recordButton');
+	var recordButtonElement = document.getElementById('record');
 	// this.recordbutton = new Button(recordButtonElement);
+
+	var playButtonElement = document.getElementById('play');
+	playButtonElement.addEventListener('click', function() {
+		// debugger;
+		animationArea.playAllAnimations();
+	})
+
 
 	// initialize add object button
 	var addAnimatedObjectButton = document.getElementById('addObject');

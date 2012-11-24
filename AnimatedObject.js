@@ -47,24 +47,29 @@ AnimatedObject.prototype.addSprite =  function(params) {
 
 AnimatedObject.prototype.playAnimation = function() {
 	console.log('play');
+	// debugger;
 	var numMovements = this.animation.length;
 	var timeout = 1;
 	var animatedObject = this;
 	for (i=1; i < numMovements; i++) {
 		var movement = this.animation[i];
 		var lastMovement = this.animation[i-1];
-		var timeTilMove = movement['deltaTimestamp'] - lastMovement['deltaTimestamp'];
-		setTimeout(animatedObject.performMovement(movement), timeTilMove);
+		var duration = movement['deltaTimestamp'] - lastMovement['deltaTimestamp'];
+		movement['duration'] = duration;
+		animatedObject.performMovement(movement);
 	}
 }
 
 AnimatedObject.prototype.performMovement = function(movement) {
 	var imageElement = $('#' + this.objectName);
 	console.log(movement['left'] + ', ' + movement['top']);
-	imageElement.css({
+	imageElement.animate(
+		{
 		'left': movement['left'],
 		'top': movement['top']
-	});
+		},
+		movement['duration']
+	);
 }
 
 AnimatedObject.prototype.recordMovement = function(movement) {

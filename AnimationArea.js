@@ -16,3 +16,14 @@ AnimationArea.prototype.addAnimatedObject = function(animatedObject) {
 	this.animatedObjects.push(animatedObject);
 	this.objectsListControl.append('<li>'+ animatedObject.objectName + '</li>');
 };
+
+/* iterates over all animated objects in the animation area
+   and calls playAnimation on each one
+*/
+AnimationArea.prototype.playAllAnimations = function() {
+	var i;
+	for (i=0; i < this.animatedObjects.length; i++) {
+		var animatedObject = this.animatedObjects[i];
+		animatedObject.playAnimation();
+	}
+}
