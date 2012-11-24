@@ -28,4 +28,6 @@ Timeline.prototype.createThumbnail = function() {
 		'supportCORS': true
 	};
 	var x = html2canvas.preload(options);
+	console.log(x);
+	x.render();
 }
