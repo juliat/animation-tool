@@ -5,8 +5,6 @@ window.onload = function() {
 	app = new App();
 	// create new object to animate for testing
 	app.addAnimatedObjects();
-
-	app.timeline.createThumbnail();
 };
 
 /* Application Class 
@@ -27,6 +25,10 @@ function App() {
 
 	// initialize record, play buttons
 	var recordButtonElement = document.getElementById('record');
+	// temporary binding for debugging
+	recordButtonElement.addEventListener('click', function() {
+		app.timeline.createThumbnail();
+	})
 	// this.recordbutton = new Button(recordButtonElement);
 
 	var playButtonElement = document.getElementById('play');

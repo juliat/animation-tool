@@ -6,7 +6,7 @@ function Timeline() {
 }
 
 Timeline.prototype.setCurrentTime = function() {
-	
+
 }
 
 Timeline.prototype.rollTime = function() {
@@ -26,12 +26,17 @@ Timeline.prototype.updateAnimationArea = function(){
 /* using html2canvas */
 Timeline.prototype.createThumbnail = function() {
 	debugger;
-	html2canvas = new html2canvas();
+	html2canvas = new html2canvas({
+		logging: true,
+		useCORS: true,
+		timeout: 100
+	});
 	elementToRender = [document.getElementById('animationArea')];
 	options = {
 		'elements': elementToRender,
 		'supportCORS': true
 	};
 	html2canvas.preload(options);
-	html2canvas.render
+	var x = html2canvas.render();
+	console.log(x);
 }
