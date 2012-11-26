@@ -6,9 +6,13 @@ when things get uploaded, they get added here
 */
 function AnimationArea() {
 	// hold onto animated objects
-	this.areaElement = $("#animationArea");
 	this.animatedObjects = [];
 	this.currentTime = 0;
+
+	// initialize kinetic.js stage
+	var stage = new Kinetic.stage({
+		container: 'animationArea'
+	})
 };
 
 AnimationArea.prototype.addAnimatedObject = function(animatedObject) {
