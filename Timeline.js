@@ -1,14 +1,19 @@
 /* Timeline class */
 function Timeline() {
 	this.timelineElement = document.getElementById("timeline");
+	this.currentTime = 0;
 	//this.line = document.getElementById();
 }
 
-Timeline.prototype.rollTime = function(params) {
+Timeline.prototype.setCurrentTime = function() {
+	
+}
+
+Timeline.prototype.rollTime = function() {
 
 }
 
-Timeline.prototype.moveLine = function(params) {
+Timeline.prototype.moveLine = function() {
 
 }
 
@@ -27,7 +32,6 @@ Timeline.prototype.createThumbnail = function() {
 		'elements': elementToRender,
 		'supportCORS': true
 	};
-	var x = html2canvas.preload(options);
-	console.log(x);
-	x.render();
+	html2canvas.preload(options);
+	html2canvas.render
 }

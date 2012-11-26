@@ -2,6 +2,7 @@
 
 /* create a new animated object */
 function AnimatedObject(name, imageFile) {
+	this.number = app.animationArea.animatedObjects.length + 1;
 	this.objectName = name;
 	// these are hardcoded defaults for now
 	this.sprites = [];
@@ -52,9 +53,6 @@ AnimatedObject.prototype.addToAnimatedArea = function() {
 			animatedObject.select();
 		});
 
-	
-
-
 	this.createController();
 }
 
@@ -63,7 +61,7 @@ AnimatedObject.prototype.createController = function() {
 	var objectControllerId = this.objectName + 'Controller';
 
 	// could not use app var here and just go straight to DOM. tradeoffs?
-	app.objectsListControl.append('<li id="' + objectControllerId + '">'+ this.objectName + '</li>');
+	app.objectsListControl.append('<li id="' + objectControllerId + '">'+ this.number + ") " + this.objectName + '</li>');
 	this.objectController = $('#'+ objectControllerId);
 
 	var animatedObj = this;

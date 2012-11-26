@@ -12,6 +12,9 @@ function AnimationArea() {
 };
 
 AnimationArea.prototype.addAnimatedObject = function(animatedObject) {
+	var number = this.animatedObjects.length;
+	// assign number to animated object
+	animatedObject.number = number;
 	this.animatedObjects.push(animatedObject);
 };
 
