@@ -6,36 +6,55 @@ function AnimatedObject(name, imageFile) {
 	this.objectName = name;
 	// these are hardcoded defaults for now
 	this.sprites = [];
-	this.sprites.push(imageFile);
 	this.animation = [];
 	this.objectController = null;
 	this.imageFile = imageFile;
+	this.canvasElement = null;
 	this.addToAnimatedArea();
 	this.paused = false; // might delete this
 }
 
 AnimatedObject.prototype.addToAnimatedArea = function() {
+	
+	var animatedObject = this;
 
 	var img = new Image();
 	img.src =this.imageFile;
+	
 	img.onload = function() {
-        var kineticImage = new Kinetic.Image({
-          x: 0,
-          y: 0,
-          image: img,
-          draggable: true
-        });
+	    var kineticImage = new Kinetic.Image({
+	      x: 0,
+	      y: 0,
+	      image: img,
+	      draggable: true
+	    });
 
-        var layer = new Kinetic.Layer();
+	    var layer = new Kinetic.Layer();
 
-        // add the shape to the layer
-        layer.add(kineticImage);
+	    // add the shape to the layer
+	    layer.add(kineticImage);
 
-        // add the layer to the stage
-        app.animationArea.stage.add(layer);
-      };
+	    // add the layer to the stage
+	    app.animationArea.stage.add(layer);
+	 	
+	 	// save kinetic object to object
+		animatedObject.canvasElement = kineticImage;
+		animatedObject.bindMovementEvents();
+	 };
 
 	this.createController();
+}
+
+AnimatedObject.prototype.bindMovementEvents = function() {
+	var animatedObject = this;
+	this.canvasElement.on('dragmove', function(event){
+		movement = {
+			top: event.y,
+			left: event.x,
+			timestamp: event.timeStamp
+		}
+		animatedObject.recordMovement(movement);
+	})
 }
 
 AnimatedObject.prototype.createController = function() {
@@ -55,6 +74,7 @@ AnimatedObject.prototype.createController = function() {
 	});
 }
 
+/* written for DOM, not kinetic.js */
 AnimatedObject.prototype.select = function() {
 	// deselect and disable all draggable objects
 	$('#objectsList li').removeClass('selected');
