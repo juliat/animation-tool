@@ -9,49 +9,30 @@ function AnimatedObject(name, imageFile) {
 	this.sprites.push(imageFile);
 	this.animation = [];
 	this.objectController = null;
-	this.imageElement = null;
+	this.imageFile = imageFile;
 	this.addToAnimatedArea();
 	this.paused = false; // might delete this
 }
 
 AnimatedObject.prototype.addToAnimatedArea = function() {
-	var areaElement = $("#animationArea");
-	areaElement.append('<img alt="' + this.objectName + 
-						'" id="' + 	this.objectName + 
-						'" class="draggable" ' + 
-						'" src="' + this.sprites[0] + 
-						'" />');
 
-	this.imageElement = $('#'+this.objectName);
+	var img = new Image();
+	img.src =this.imageFile;
+	img.onload = function() {
+        var kineticImage = new Kinetic.Image({
+          x: 0,
+          y: 0,
+          image: img,
+        });
 
-	var animatedObject = this;
+        var layer = new Kinetic.Layer();
 
-	this.imageElement
-		// make draggable within the animation area
-		.draggable({
-			startMoveTime: 0,
-			containment: "#animationArea",
-			start: function(event) {
-				animatedObject.animation = []; // clear out animation list
-				startMoveTime = event.timeStamp;
-			},
-			drag: function(event) {
-				var movement = {
-					left : this.style.left,
-					top : this.style.top,
-					deltaTimestamp : event.timeStamp - startMoveTime
-				}
-				animatedObject.recordMovement(movement);
-			},
-			end: function(event) {
-				animatedObject.totalAnimationDuration = event.timeStamp - startMoveTime;
-				console.log(animatedObject.totalAnimationDuration);
-			}
-		})
-		// also bind the select method to the click event for the image
-		.bind('click', function(){
-			animatedObject.select();
-		});
+        // add the shape to the layer
+        layer.add(kineticImage);
+
+        // add the layer to the stage
+        app.animationArea.stage.add(layer);
+      };
 
 	this.createController();
 }

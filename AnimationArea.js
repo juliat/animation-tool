@@ -10,20 +10,17 @@ function AnimationArea() {
 	this.currentTime = 0;
 
 	this.areaElement = $('#animationArea');
-
+	this.stage = null;
 	this.init();
 };
 
 AnimationArea.prototype.init = function() {
 	// initialize kinetic.js stage
-	var stage = new Kinetic.Stage({
+	this.stage = new Kinetic.Stage({
 		container: 'animationArea',
 		height: this.areaElement.height(),
 		width: this.areaElement.width()
 	})
-	var layer = new Kinetic.Layer();
-
-	stage.add(layer);
 }
 
 AnimationArea.prototype.addAnimatedObject = function(animatedObject) {
