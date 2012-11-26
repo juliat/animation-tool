@@ -23,6 +23,7 @@ AnimatedObject.prototype.addToAnimatedArea = function() {
           x: 0,
           y: 0,
           image: img,
+          draggable: true
         });
 
         var layer = new Kinetic.Layer();
