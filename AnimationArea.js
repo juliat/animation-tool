@@ -9,11 +9,22 @@ function AnimationArea() {
 	this.animatedObjects = [];
 	this.currentTime = 0;
 
-	// initialize kinetic.js stage
-	var stage = new Kinetic.stage({
-		container: 'animationArea'
-	})
+	this.areaElement = $('#animationArea');
+
+	this.init();
 };
+
+AnimationArea.prototype.init = function() {
+	// initialize kinetic.js stage
+	var stage = new Kinetic.Stage({
+		container: 'animationArea',
+		height: this.areaElement.height(),
+		width: this.areaElement.width()
+	})
+	var layer = new Kinetic.Layer();
+
+	stage.add(layer);
+}
 
 AnimationArea.prototype.addAnimatedObject = function(animatedObject) {
 	var number = this.animatedObjects.length;
