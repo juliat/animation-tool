@@ -25,18 +25,11 @@ Timeline.prototype.updateAnimationArea = function(){
 
 /* using html2canvas */
 Timeline.prototype.createThumbnail = function() {
-	debugger;
-	html2canvas = new html2canvas({
-		logging: true,
-		useCORS: true,
-		timeout: 100
-	});
-	elementToRender = [document.getElementById('animationArea')];
-	options = {
-		'elements': elementToRender,
-		'supportCORS': true
-	};
-	html2canvas.preload(options);
-	var x = html2canvas.render();
-	console.log(x);
+	var html2obj = html2canvas($('#animationArea'));
+
+	var queue  = html2obj.parse();
+	var canvas = html2obj.render(queue);
+	var img = canvas.toDataURL();
+
+	window.open(img);
 }
