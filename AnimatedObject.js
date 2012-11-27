@@ -71,9 +71,12 @@ AnimatedObject.prototype.bindMovementEvents = function() {
 	this.canvasElement.on('dragend', function() {
 		console.log('dragend');	
 		// save this animation and get ready to record another
-		debugger;
+		// debugger;
 		animatedObject.animations.push(animatedObject.currentAnimation);
-		animatedObject.currentAnimation = {};
+		animatedObject.currentAnimation = {
+			startTime: 0,
+			movements : []
+		};
 	});
 }
 
@@ -116,18 +119,26 @@ AnimatedObject.prototype.addSprite =  function(params) {
 
 AnimatedObject.prototype.playAnimation = function() {
 	console.log('play');
-	var animation = this.animations[0];
-	var numMovements = animation.movements.length;
-	var i = 1;
-	while (i < numMovements) {
-		var movement = animation.movements[i];
-		var lastMovement = animation.movements[i-1];
-		var duration = movement['deltaTimestamp'] - lastMovement['deltaTimestamp'];
-		movement['duration'] = duration;
-		if (this.paused === false) {
-			this.performMovement(movement);
+	if (this.animations.length !== 0) {
+		var animation = this.animations[0];
+		var numMovements = animation.movements.length;
+		var i = 1;
+		while (i < numMovements) {
+			var movement = animation.movements[i];
+			var lastMovement = animation.movements[i-1];
+			var duration = movement['deltaTimestamp'] - lastMovement['deltaTimestamp'];
+			movement['duration'] = duration;
+			var animatedObject = this;
+			if (this.paused === false) {
+				// closure to make sure movement var works
+				(function(movement) {
+					setTimeout(function(){
+						animatedObject.performMovement(movement)
+					}, movement['deltaTimestamp']);
+				}(movement));
+			}
+			i++;
 		}
-		i++;
 	}
 }
 
@@ -136,13 +147,11 @@ AnimatedObject.prototype.pauseAnimation = function() {
 }
 
 AnimatedObject.prototype.performMovement = function(movement) {
-	this.canvasElement.transitionTo(
-		{
-		'x': movement['x'],
-		'y': movement['y'],
-		'duration': movement['duration']
-		}
-	);
+	console.log(movement);
+	// debugger;
+	this.canvasElement.transitionTo(movement);
+	this.canvasElement.setX(movement['x']);
+	this.canvasElement.setY(movement['y']);
 }
 
 AnimatedObject.prototype.recordMovement = function(movement) {
