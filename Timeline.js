@@ -3,6 +3,7 @@ function Timeline() {
 	this.timelineElement = document.getElementById("timeline");
 	this.currentTime = 0;
 	//this.line = document.getElementById();
+	this.framesList = $('#frames')
 }
 
 Timeline.prototype.setCurrentTime = function() {
@@ -25,9 +26,18 @@ Timeline.prototype.updateAnimationArea = function(){
 
 /* using html2canvas */
 Timeline.prototype.createThumbnail = function() {
+	var timeline = this;
 	var config = {
-		callback: function(result) {$('body').append(result)},
+		height: 20,
+		callback: function(result) {
+			timeline.addThumbnailToTimeline(result);
+		}
 
 	}
 	app.animationArea.stage.toImage(config);
+}
+
+Timeline.prototype.addThumbnailToTimeline = function(thumbnail) {
+	this.framesList.append(thumbnail);
+	thumbnail.style.height = '4em';
 }
