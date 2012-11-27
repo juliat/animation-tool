@@ -47,6 +47,9 @@ AnimatedObject.prototype.addToAnimatedArea = function() {
 
 AnimatedObject.prototype.bindMovementEvents = function() {
 	var animatedObject = this;
+	this.canvasElement.on('click', function() {
+		animatedObject.select();
+	})
 	this.canvasElement.on('dragmove', function(event){
 		movement = {
 			top: event.y,
@@ -78,11 +81,16 @@ AnimatedObject.prototype.createController = function() {
 AnimatedObject.prototype.select = function() {
 	// deselect and disable all draggable objects
 	$('#objectsList li').removeClass('selected');
-	$('.ui-draggable').draggable('disable');
+	var allObjects = app.animationArea.animatedObjects;
+	var i;
+	for (i = 0; i < allObjects.length; i++) {
+		var obj = allObjects[i].canvasElement;
+		obj.setDraggable(false);
+	}
 	
 	// and only select and enable this one
 	this.objectController.addClass('selected');
-	this.imageElement.draggable('enable');	
+	this.canvasElement.setDraggable(true)
 }
 
 AnimatedObject.prototype.addSprite =  function(params) {
