@@ -6,7 +6,11 @@ function AnimatedObject(name, imageFile) {
 	this.objectName = name;
 	// these are hardcoded defaults for now
 	this.sprites = [];
-	this.animation = [];
+	this.animations = [];
+	this.currentAnimation = {
+		startTime : 0,
+		movements :[]
+	}
 	this.objectController = null;
 	this.imageFile = imageFile;
 	this.canvasElement = null;
@@ -56,13 +60,20 @@ AnimatedObject.prototype.bindMovementEvents = function() {
 		startMoveTime = event.timeStamp;
 	})
 	this.canvasElement.on('dragmove', function(event){
+		// console.log('dragmove');
 		movement = {
 			y: event.y,
 			x: event.x,
 			deltaTimestamp: event.timeStamp - startMoveTime
 		}
-
 		animatedObject.recordMovement(movement);
+	});
+	this.canvasElement.on('dragend', function() {
+		console.log('dragend');	
+		// save this animation and get ready to record another
+		debugger;
+		animatedObject.animations.push(animatedObject.currentAnimation);
+		animatedObject.currentAnimation = {};
 	});
 }
 
@@ -105,11 +116,12 @@ AnimatedObject.prototype.addSprite =  function(params) {
 
 AnimatedObject.prototype.playAnimation = function() {
 	console.log('play');
-	var numMovements = this.animation.length;
+	var animation = this.animations[0];
+	var numMovements = animation.movements.length;
 	var i = 1;
 	while (i < numMovements) {
-		var movement = this.animation[i];
-		var lastMovement = this.animation[i-1];
+		var movement = animation.movements[i];
+		var lastMovement = animation.movements[i-1];
 		var duration = movement['deltaTimestamp'] - lastMovement['deltaTimestamp'];
 		movement['duration'] = duration;
 		if (this.paused === false) {
@@ -134,5 +146,6 @@ AnimatedObject.prototype.performMovement = function(movement) {
 }
 
 AnimatedObject.prototype.recordMovement = function(movement) {
-	this.animation.push(movement);
+	this.currentAnimation.movements.push(movement);
+	console.log(this.currentAnimation.movements);
 }
