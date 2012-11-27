@@ -25,11 +25,9 @@ Timeline.prototype.updateAnimationArea = function(){
 
 /* using html2canvas */
 Timeline.prototype.createThumbnail = function() {
-	var html2obj = html2canvas($('#animationArea'));
+	var config = {
+		callback: function(result) {$('body').append(result)},
 
-	var queue  = html2obj.parse();
-	var canvas = html2obj.render(queue);
-	var img = canvas.toDataURL();
-
-	window.open(img);
+	}
+	app.animationArea.stage.toImage(config);
 }
