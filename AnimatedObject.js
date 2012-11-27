@@ -15,7 +15,6 @@ function AnimatedObject(name, imageFile) {
 }
 
 AnimatedObject.prototype.addToAnimatedArea = function() {
-	
 	var animatedObject = this;
 
 	var img = new Image();
@@ -26,7 +25,7 @@ AnimatedObject.prototype.addToAnimatedArea = function() {
 	      x: 0,
 	      y: 0,
 	      image: img,
-	      draggable: true
+	      draggable: false
 	    });
 
 	    var layer = new Kinetic.Layer();
@@ -47,17 +46,24 @@ AnimatedObject.prototype.addToAnimatedArea = function() {
 
 AnimatedObject.prototype.bindMovementEvents = function() {
 	var animatedObject = this;
+	// this should work on dragstart but is being buggy :/
+	var startMoveTime;
 	this.canvasElement.on('click', function() {
 		animatedObject.select();
+	});
+	this.canvasElement.on('dragstart', function(event) {
+		// debugger;
+		startMoveTime = event.timeStamp;
 	})
 	this.canvasElement.on('dragmove', function(event){
 		movement = {
-			top: event.y,
-			left: event.x,
-			timestamp: event.timeStamp
+			y: event.y,
+			x: event.x,
+			deltaTimestamp: event.timeStamp - startMoveTime
 		}
+
 		animatedObject.recordMovement(movement);
-	})
+	});
 }
 
 AnimatedObject.prototype.createController = function() {
@@ -99,7 +105,6 @@ AnimatedObject.prototype.addSprite =  function(params) {
 
 AnimatedObject.prototype.playAnimation = function() {
 	console.log('play');
-	this.paused = false;
 	var numMovements = this.animation.length;
 	var i = 1;
 	while (i < numMovements) {
@@ -119,13 +124,12 @@ AnimatedObject.prototype.pauseAnimation = function() {
 }
 
 AnimatedObject.prototype.performMovement = function(movement) {
-	var imageElement = $('#' + this.objectName);
-	imageElement.animate(
+	this.canvasElement.transitionTo(
 		{
-		'left': movement['left'],
-		'top': movement['top']
-		},
-		movement['duration']
+		'x': movement['x'],
+		'y': movement['y'],
+		'duration': movement['duration']
+		}
 	);
 }
 

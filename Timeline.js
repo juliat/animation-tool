@@ -2,7 +2,6 @@
 function Timeline() {
 	this.timelineElement = document.getElementById("timeline");
 	this.currentTime = 0;
-	//this.line = document.getElementById();
 	this.framesList = $('#frames')
 }
 
