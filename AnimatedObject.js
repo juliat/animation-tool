@@ -14,6 +14,23 @@ function AnimatedObject(name, imageFile) {
 	this.paused = false; // might delete this
 }
 
+AnimatedObject.prototype.addToCanvas = function(img) {
+	debugger;
+	var kineticImage = new Kinetic.Image({
+      x: 0,
+      y: 0,
+      image: img,
+      draggable: true,
+      id: this.objectName
+    });
+
+    // add the layer to the stage
+    Kinetic.getStage.add(kineticImage);
+ 	
+ 	// save kinetic object to object
+	this.canvasElement = kineticImage;
+	this.bindMovementEvents();
+}
 AnimatedObject.prototype.addToAnimatedArea = function() {
 	
 	var animatedObject = this;
@@ -21,37 +38,22 @@ AnimatedObject.prototype.addToAnimatedArea = function() {
 	var img = new Image();
 	img.src =this.imageFile;
 	
-	img.onload = function() {
-	    var kineticImage = new Kinetic.Image({
-	      x: 0,
-	      y: 0,
-	      image: img,
-	      draggable: true
-	    });
-
-	    var layer = new Kinetic.Layer();
-
-	    // add the shape to the layer
-	    layer.add(kineticImage);
-
-	    // add the layer to the stage
-	    app.animationArea.stage.add(layer);
-	 	
-	 	// save kinetic object to object
-		animatedObject.canvasElement = kineticImage;
-		animatedObject.bindMovementEvents();
-	 };
-
+	img.onload = this.addToCanvas(img);
+	    
 	this.createController();
 }
 
 AnimatedObject.prototype.bindMovementEvents = function() {
 	var animatedObject = this;
+	var movementStartTime = 0;
+	this.canvasElement.on('dragstart', function(event){
+		movementStartTime = event.timeStamp;
+	})
 	this.canvasElement.on('dragmove', function(event){
 		movement = {
 			top: event.y,
 			left: event.x,
-			timestamp: event.timeStamp
+			deltaTimestamp: event.timeStamp - movementStartTime
 		}
 		animatedObject.recordMovement(movement);
 	})
@@ -93,6 +95,10 @@ AnimatedObject.prototype.playAnimation = function() {
 	console.log('play');
 	this.paused = false;
 	var numMovements = this.animation.length;
+	// move to original position
+	this.canvasElement.x = this.animation[0]['x'];
+	this.canvasElement.y = this.animation[0]['y'];
+
 	var i = 1;
 	while (i < numMovements) {
 		var movement = this.animation[i];
@@ -111,14 +117,11 @@ AnimatedObject.prototype.pauseAnimation = function() {
 }
 
 AnimatedObject.prototype.performMovement = function(movement) {
-	var imageElement = $('#' + this.objectName);
-	imageElement.animate(
-		{
-		'left': movement['left'],
-		'top': movement['top']
-		},
-		movement['duration']
-	);
+	this.canvasElement.animate({
+		left: movement['x'],
+		top: movement['y'],
+		duration: movement['duration'],
+	});
 }
 
 AnimatedObject.prototype.recordMovement = function(movement) {
