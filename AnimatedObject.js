@@ -61,9 +61,10 @@ AnimatedObject.prototype.bindMovementEvents = function() {
 	})
 	this.canvasElement.on('dragmove', function(event){
 		// console.log('dragmove');
+		console.log(animatedObject.objectName +', x=' + event.offsetX +', y=' +event.offsetY);
 		movement = {
-			y: event.y,
-			x: event.x,
+			y: event.offsetY,
+			x: event.offsetX,
 			deltaTimestamp: event.timeStamp - startMoveTime
 		}
 		animatedObject.recordMovement(movement);
@@ -147,14 +148,14 @@ AnimatedObject.prototype.pauseAnimation = function() {
 }
 
 AnimatedObject.prototype.performMovement = function(movement) {
+	console.log('performing movement');
 	console.log(movement);
 	// debugger;
-	this.canvasElement.transitionTo(movement);
 	this.canvasElement.setX(movement['x']);
 	this.canvasElement.setY(movement['y']);
+	app.animationArea.stage.draw();
 }
 
 AnimatedObject.prototype.recordMovement = function(movement) {
 	this.currentAnimation.movements.push(movement);
-	console.log(this.currentAnimation.movements);
 }
