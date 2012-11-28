@@ -49,3 +49,27 @@ Timer.prototype.currentTime = function() {
 			startTime: 0,
 			movements : []
 		};
+
+
+
+
+	var playButtonElement = $('#play');
+	/*
+	playButtonElement.on('tap', function() {
+		app.timer.clear();
+		app.timer.start();
+		app.timer.bind(this.frameInterval + ' milliseconds', function(){
+			app.currentTime = app.timer._ticks;
+			animationArea.moveObjects(app.currentTime);
+		})	
+	});
+	*/
+	playButtonElement.bind('click', function() {
+		console.log('play');
+		app.timer.clear();
+		app.timer.start();
+		app.timer.bind(this.frameInterval*2 + ' milliseconds', function(){
+			app.currentTime = app.timer._ticks;
+			animationArea.moveObjects(app.currentTime);
+		});
+	});

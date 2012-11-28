@@ -1,9 +1,18 @@
 body * {
-	border: 1px solid black;
+	border-bottom: 1px solid black;
+	border-right: 1px solid black;
+	font-family: 'Cabin', sans-serif;
+	font-size: 1.15em;
+	font-weight: bold;
+	letter-spacing: 0.5px;
 }
-
 * {
 	box-sizing: border-box;
+}
+
+#timelineContainer, #objectControls, #timeControlsButtons {
+	background-color: #333;
+	color: #fff;
 }
 
 #timeControlsButtons, #objectControls {
@@ -30,10 +39,16 @@ body * {
 
 #animationArea {
 	clear: top;
+	background-color: #fefefe;
+}
+
+#objectsList li {
+	height: 3em;
+	padding: 1em;
 }
 
 #objectsList .selected {
-	background-color: lightgreen;
+	background-color: #55b76d;
 }
 
 #timelineContainer {
@@ -42,4 +57,22 @@ body * {
 
 #frames {
 	width: 500%;
+}
+
+button {
+	padding: 1em 3em;
+	width: 90%;
+	height: 83%;
+	border-radius: 10px;
+	margin-top: 3%;
+	margin-left: 5%;
+	margin-bottom: 3%;
+	text-transform: uppercase;
+}
+
+.recordingButton {
+	background-color: #60a950;
+}
+.stoppedButton {
+	background-color: #ef473e;
 }

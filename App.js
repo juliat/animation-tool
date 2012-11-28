@@ -10,15 +10,27 @@ initializes javascript that hooks into controls and the animation screen
 binds control buttons
  */
 function App() {
-	// set attributes for the state of the app
-	this.recording = false;
-	this.playing = false;
+	var app = this;
 
 	this.frameRate = 24;
 	this.frameInterval = 1000/this.frameRate;
 
+	this.endTime = 0;
+
 	var timerResolution = this.frameInterval + ' milliseconds';
 	this.timer = new Timer(timerResolution);
+	this.timer.every(this.frameInterval + ' milliseconds', function() {
+		if (app.timer.running) {
+			app.currentTime = app.timer._ticks;
+			var time = app.currentTime;
+			animationArea.moveObjects(app.currentTime); // just added
+			if ((time > app.endTime) && (time % 10 === 0)) {
+				//app.timeline.createThumbnail();
+				$('#frames').append((app.endTime % 10) + time + ' | ');
+			}
+		}
+	});
+
 
 	// initialize the Timeline object
 	this.timeline = new Timeline();
@@ -39,43 +51,19 @@ function App() {
 	var app = this;
 	// temporary binding for debugging
 	recordButtonElement.bind('click', function() {
+		var self = $(recordButtonElement);
+
 		if (app.timer.running()) {
 			app.timer.stop();
+			app.endTime = app.timer._ticks;
+			app.timer._ticks = 0; // reset to start
+			self.html("Start").toggleClass('recordingButton');
 		}
 		else {
 			app.timer.start();
-			app.timer.bind(this.frameInterval + ' milliseconds', function() {
-				app.currentTime = app.timer._ticks;
-				console.log(app.currentTime);
-				if (app.currentTime % 10 == 0) {
-					//app.timeline.createThumbnail();
-					$('#frames').append(app.currentTime + ' | ');
-				}
-			});
-			recordButtonElement.text = "stop";
+			self.html("Stop").toggleClass('stoppedButton');
 		}
 	}); // close bind
-
-
-	var playButtonElement = $('#play');
-	/*
-	playButtonElement.on('tap', function() {
-		app.timer.clear();
-		app.timer.start();
-		app.timer.bind(this.frameInterval + ' milliseconds', function(){
-			app.currentTime = app.timer._ticks;
-			animationArea.moveObjects(app.currentTime);
-		})	
-	});
-	*/
-	playButtonElement.bind('click', function() {
-		app.timer.clear();
-		app.timer.start();
-		app.timer.bind(this.frameInterval*2 + ' milliseconds', function(){
-			app.currentTime = app.timer._ticks;
-			animationArea.moveObjects(app.currentTime);
-		});
-	});
 
 
 	this.objectsListControl = $("#objectsList");

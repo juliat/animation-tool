@@ -29,3 +29,4 @@ http://ramkulkarni.com/blog/record-and-playback-drawing-in-html5-canvas/
 - jquery
 - jquery ui
 - Reveal Modal by Zurb
+- https://github.com/fschaefer/Timer.js
