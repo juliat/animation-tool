@@ -61,10 +61,10 @@ AnimatedObject.prototype.bindMovementEvents = function() {
 	})
 	this.canvasElement.on('dragmove', function(event){
 		// console.log('dragmove');
-		console.log(animatedObject.objectName +', x=' + event.offsetX +', y=' +event.offsetY);
+		// console.log(animatedObject.objectName +', x=' + event.offsetX +', y=' +event.offsetY);
 		movement = {
-			y: event.offsetY,
-			x: event.offsetX,
+			y: animatedObject.canvasElement.getY(),
+			x: animatedObject.canvasElement.getX(),
 			deltaTimestamp: event.timeStamp - startMoveTime
 		}
 		animatedObject.recordMovement(movement);
