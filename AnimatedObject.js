@@ -83,25 +83,36 @@ AnimatedObject.prototype.createController = function() {
 	// bind a click selection event to the controller
 	this.objectController.bind('click', function() {
 		console.log('clicked '+ objectControllerId);
-		animatedObj.select();
+		animatedObj.toggleSelect();
 	});
 }
 
-AnimatedObject.prototype.select = function() {
-	// deselect and disable all draggable objects
-	$('#objectsList li').removeClass('selected');
-	var allObjects = app.animationArea.animatedObjects;
-	var i;
-	for (i = 0; i < allObjects.length; i++) {
-		var obj = allObjects[i].canvasElement;
-		obj.setDraggable(false);
-		obj.isSelected = false;
+AnimatedObject.prototype.toggleSelect = function() {
+	if (this.isSelected === false) {
+		// deselect and disable all draggable objects
+		$('#objectsList li').removeClass('selected');
+		var allObjects = app.animationArea.animatedObjects;
+		var i;
+		for (i = 0; i < allObjects.length; i++) {
+			var obj = allObjects[i].canvasElement;
+			obj.setDraggable(false);
+			this.isSelected = false;
+		}
+
+		// and only select and enable this one
+		this.objectController.addClass('selected');
+		this.canvasElement.setDraggable(true);
+		this.isSelected = true;
 	}
-	
-	// and only select and enable this one
-	this.objectController.addClass('selected');
-	this.canvasElement.setDraggable(true)
-	obj.isSelected = true;
+	else {
+		this.objectController.removeClass('selected');
+		this.canvasElement.setDraggable(false);
+		this.isSelected = false;
+	}
+}
+
+AnimatedObject.prototype.deselect = function() {
+
 }
 
 AnimatedObject.prototype.addSprite =  function(params) {

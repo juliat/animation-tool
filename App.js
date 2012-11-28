@@ -57,11 +57,11 @@ function App() {
 			app.timer.stop();
 			app.endTime = app.timer._ticks;
 			app.timer._ticks = 0; // reset to start
-			self.html("Start").toggleClass('recordingButton');
+			self.html("Start").toggleClass('stoppedButton').toggleClass('recordingButton');
 		}
 		else {
 			app.timer.start();
-			self.html("Stop").toggleClass('stoppedButton');
+			self.html("Stop").toggleClass('stoppedButton').toggleClass('recordingButton');
 		}
 	}); // close bind
 

@@ -1,7 +1,5 @@
 body * {
-	border-bottom: 1px solid black;
-	border-right: 1px solid black;
-	font-family: 'Cabin', sans-serif;
+	font-family: "helvetica neue", helvetica, arial, sans-serif;
 	font-size: 1.15em;
 	font-weight: bold;
 	letter-spacing: 0.5px;
@@ -29,6 +27,11 @@ body * {
 	height: 5.25em;
 }
 
+#timeControlsButtons {
+    border-right: 1px solid #888;
+    border-bottom: 1px solid #888;
+}
+
 #objectControls, #animationArea {
 	height: 40em;
 }
@@ -45,10 +48,11 @@ body * {
 #objectsList li {
 	height: 3em;
 	padding: 1em;
+	border-top: #888;
 }
 
 #objectsList .selected {
-	background-color: #55b76d;
+	background-color: black;
 }
 
 #timelineContainer {
@@ -58,7 +62,9 @@ body * {
 #frames {
 	width: 500%;
 }
-
+#objectControlsButtons {
+    border-top: 1px solid #888;
+}
 button {
 	padding: 1em 3em;
 	width: 90%;
@@ -70,9 +76,39 @@ button {
 	text-transform: uppercase;
 }
 
+button {
+	background: #e3e3e3;
+	border: 1px solid #bbb;
+	border-radius: 3px;
+	-webkit-box-shadow: inset 0 0 1px 1px #f6f6f6;
+	box-shadow: inset 0 0 1px 1px #f6f6f6;
+	color: #333;
+	padding: 8px 0 9px;
+	text-align: center;
+}
+button:hover {
+	background: #d9d9d9;
+	-webkit-box-shadow: inset 0 0 1px 1px #eaeaea;
+	box-shadow: inset 0 0 1px 1px #eaeaea;
+	color: #222;
+	cursor: pointer; 
+}
+button:active {
+	background: #d0d0d0;
+	-webkit-box-shadow: inset 0 0 1px 1px #e3e3e3;
+	box-shadow: inset 0 0 1px 1px #e3e3e3;
+	color: #000; 
+}
+
 .recordingButton {
-	background-color: #60a950;
+	background-color: #8EDA2E;
+}
+.recordingButton:hover {
+	background: #b5eb43;
 }
 .stoppedButton {
-	background-color: #ef473e;
+	background-color: #f25928;
+}
+.stoppedButton:hover {
+	background: #fa473e;
 }
