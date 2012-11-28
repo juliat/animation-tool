@@ -26,3 +26,17 @@ function addPoint(x,y,time) {
 }
 
 
+function Timer() {
+    var framesPerSecond = 30;
+    this.timeInterval = 1000/framesPerSecond; // 1 millisecond / 30
+}
+
+Timer.prototype.start = function(){
+    this.absoluteStart = new Date().getTime();
+};
+
+Timer.prototype.currentTime = function() {
+    var currentAbsoluteTime = new Date().getTime();
+    var currentRelativeTime = currentAbsoluteTime - this.absoluteStart;
+    return currentRelativeTime; // time since we started recording
+};

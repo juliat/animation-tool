@@ -15,13 +15,12 @@ function AnimationArea() {
 };
 
 AnimationArea.prototype.init = function() {
-	// initialize kinetic.js stage
 	this.stage = new Kinetic.Stage({
 		container: 'animationArea',
 		height: this.areaElement.height(),
 		width: this.areaElement.width()
 	})
-}
+};
 
 AnimationArea.prototype.addAnimatedObject = function(animatedObject) {
 	var number = this.animatedObjects.length;

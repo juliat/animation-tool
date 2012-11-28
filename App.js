@@ -1,5 +1,3 @@
-var time = new Date();
-
 window.onload = function() {
 	// create a new instance of App
 	app = new App();
@@ -16,6 +14,11 @@ function App() {
 	this.recording = false;
 	this.playing = false;
 
+	this.timer = new Timer();
+
+
+	this.frameRate = 24;
+
 	// initialize the Timeline object
 	this.timeline = new Timeline();
 
@@ -26,11 +29,18 @@ function App() {
 	// initialize record, play buttons
 	var recordButtonElement = $('#record');
 	recordButtonElement.on("tap", function(){
-		app.timeline.createThumbnail();
+		// app.timeline.createThumbnail
+		
 	});
+
+	var app = this;
 	// temporary binding for debugging
 	recordButtonElement.bind('click', function() {
-		app.timeline.createThumbnail();
+		//app.timeline.createThumbnail();
+		app.timer.start();
+		app.timer.bind('1 second', function(){
+		console.log(app.timer._ticks);
+	})
 	})
 	// this.recordbutton = new Button(recordButtonElement);
 
@@ -51,10 +61,9 @@ function App() {
 	this.objectsListControl = $("#objectsList");
 
 	// initialize add object button
-	var addAnimatedObjectButton = document.getElementById('addObject');
-	addAnimatedObjectButton.addEventListener('click', function(e){
+	var addAnimatedObjectButton = $('#addObject');
+	addAnimatedObjectButton.bind('click', function(e){
 		e.preventDefault();
-		console.log('hey');
 		$('#addObjectModal').reveal();
 	});
 }

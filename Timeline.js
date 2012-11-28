@@ -5,7 +5,7 @@ function Timeline() {
 	this.framesList = $('#frames')
 }
 
-Timeline.prototype.setCurrentTime = function() {
+Timeline.prototype.getCurrentTime = function() {
 
 }
 

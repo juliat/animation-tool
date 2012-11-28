@@ -157,4 +157,5 @@ AnimatedObject.prototype.performMovement = function(movement) {
 
 AnimatedObject.prototype.recordMovement = function(movement) {
 	this.currentAnimation.movements.push(movement);
+	console.log(this.currentAnimation.movements);
 }
