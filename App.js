@@ -39,16 +39,20 @@ function App() {
 	var app = this;
 	// temporary binding for debugging
 	recordButtonElement.bind('click', function() {
-		// app.timeline.createThumbnail();
 		if (app.timer.running()) {
 			app.timer.stop();
 		}
 		else {
 			app.timer.start();
-			app.timer.bind(this.frameInterval + ' milliseconds', function(){
+			app.timer.bind(this.frameInterval + ' milliseconds', function() {
 				app.currentTime = app.timer._ticks;
 				console.log(app.currentTime);
+				if (app.currentTime % 10 == 0) {
+					//app.timeline.createThumbnail();
+					$('#frames').append(app.currentTime + ' | ');
+				}
 			});
+			recordButtonElement.text = "stop";
 		}
 	}); // close bind
 
@@ -67,17 +71,12 @@ function App() {
 	playButtonElement.bind('click', function() {
 		app.timer.clear();
 		app.timer.start();
-		app.timer.bind(this.frameInterval + ' milliseconds', function(){
+		app.timer.bind(this.frameInterval*2 + ' milliseconds', function(){
 			app.currentTime = app.timer._ticks;
 			animationArea.moveObjects(app.currentTime);
-		})	
+		});
 	});
 
-	// temporary button
-	var pauseButtonElement = $('#pause');
-	pauseButtonElement.bind('click', function() {
-		animationArea.pauseAllAnimations();
-	});
 
 	this.objectsListControl = $("#objectsList");
 

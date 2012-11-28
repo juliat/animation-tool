@@ -27,12 +27,12 @@ Timeline.prototype.updateAnimationArea = function(){
 Timeline.prototype.createThumbnail = function() {
 	var timeline = this;
 	var config = {
-		height: 20,
 		callback: function(result) {
 			timeline.addThumbnailToTimeline(result);
-		}
-
-	}
+		},
+		mimeType: 'image/jpeg',
+		quality: 0.1
+	};
 	app.animationArea.stage.toImage(config);
 }
 

@@ -17,7 +17,7 @@ body * {
 }
 
 #timelineContainer, #timeControlsButtons {
-	height: 4em;
+	height: 5.25em;
 }
 
 #objectControls, #animationArea {
@@ -34,4 +34,12 @@ body * {
 
 #objectsList .selected {
 	background-color: lightgreen;
+}
+
+#timelineContainer {
+	overflow-x: scroll;
+}
+
+#frames {
+	width: 500%;
 }
