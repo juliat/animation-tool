@@ -15,7 +15,7 @@ function App() {
 	this.playing = false;
 
 	this.frameRate = 24;
-	this.frameInterval = 1000/frameRate;
+	this.frameInterval = 1000/this.frameRate;
 
 	var timerResolution = this.frameInterval + ' milliseconds';
 	this.timer = new Timer(timerResolution);
@@ -29,11 +29,13 @@ function App() {
 
 	// initialize record, play buttons
 	var recordButtonElement = $('#record');
+	/*
 	recordButtonElement.on("tap", function(){
 		// app.timeline.createThumbnail
 		
 	});
-
+	*/
+	
 	var app = this;
 	// temporary binding for debugging
 	recordButtonElement.bind('click', function() {
@@ -52,10 +54,16 @@ function App() {
 
 
 	var playButtonElement = $('#play');
+	/*
 	playButtonElement.on('tap', function() {
-		animationArea.playAllAnimations();
+		app.timer.clear();
+		app.timer.start();
+		app.timer.bind(this.frameInterval + ' milliseconds', function(){
+			app.currentTime = app.timer._ticks;
+			animationArea.moveObjects(app.currentTime);
+		})	
 	});
-
+	*/
 	playButtonElement.bind('click', function() {
 		app.timer.clear();
 		app.timer.start();

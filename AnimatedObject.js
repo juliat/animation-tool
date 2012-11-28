@@ -110,8 +110,8 @@ AnimatedObject.prototype.addSprite =  function(params) {
 
 AnimatedObject.prototype.playAnimation = function() {
 	console.log('play');
-	if (this.animations.length !== 0) {
-		var animation = this.animations[0];
+	if (this.animation.length !== 0) {
+		var animation = this.animation;
 		var numMovements = animation.movements.length;
 		var i = 1;
 		while (i < numMovements) {
@@ -147,6 +147,7 @@ AnimatedObject.prototype.performMovement = function(movement) {
 }
 
 AnimatedObject.prototype.recordMovement = function(movement) {
-	this.animation[movement['time']+''] = movement;
+	var movementTimeKey = movement['time'];
+	this.animation[movementTimeKey] = movement;
 	console.log(this.animation);
 }
