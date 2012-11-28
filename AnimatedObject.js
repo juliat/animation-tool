@@ -52,7 +52,7 @@ AnimatedObject.prototype.bindMovementEvents = function() {
 	var animatedObject = this;
 	// this should work on dragstart but is being buggy :/
 	var startMoveTime;
-	this.canvasElement.on('click', function() {
+	this.canvasElement.on('click touchstart', function() {
 		animatedObject.select();
 	});
 	this.canvasElement.on('dragstart touchstart', function(event) {
@@ -61,19 +61,11 @@ AnimatedObject.prototype.bindMovementEvents = function() {
 	})
 	this.canvasElement.on('dragmove touchmove', function(event){
 		console.log('dragmove');
-		if (event.type === "touchmove") {
-			movement = {
-				y: event.targetTouches[0]['clientY'],
-				x: event.targetTouches[0]['clientX'],
-			}
+		movement = {
+			y: animatedObject.canvasElement.getY(),
+			x: animatedObject.canvasElement.getX(),
+			deltaTimestamp: event.timeStamp - startMoveTime
 		}
-		else {
-			movement = {
-				y: animatedObject.canvasElement.getY(),
-				x: animatedObject.canvasElement.getX(),
-			}
-		}
-		movement['deltaTimestamp'] = event.timeStamp - startMoveTime;
 		animatedObject.recordMovement(movement);
 	});
 	this.canvasElement.on('dragend touchend', function() {
