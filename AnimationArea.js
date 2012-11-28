@@ -40,6 +40,17 @@ AnimationArea.prototype.playAllAnimations = function() {
 	}
 };
 
+AnimationArea.prototype.moveObjects = function(time) {
+	var i;
+	for (i=0; i < this.animatedObjects.length; i++) {
+		var animatedObject = this.animatedObjects[i];
+		var movement = animatedObject.animation['time'];
+		if (movement !== undefined) {
+			animatedObject.performMovement(movement);
+		}
+	}	
+}
+
 AnimationArea.prototype.pauseAllAnimations = function() {
 	debugger;
 	var i;

@@ -14,10 +14,11 @@ function App() {
 	this.recording = false;
 	this.playing = false;
 
-	this.timer = new Timer();
-
-
 	this.frameRate = 24;
+	this.frameInterval = 1000/frameRate;
+
+	var timerResolution = this.frameInterval + ' milliseconds';
+	this.timer = new Timer(timerResolution);
 
 	// initialize the Timeline object
 	this.timeline = new Timeline();
@@ -36,20 +37,32 @@ function App() {
 	var app = this;
 	// temporary binding for debugging
 	recordButtonElement.bind('click', function() {
-		//app.timeline.createThumbnail();
-		app.timer.start();
-		app.timer.bind('1 second', function(){
-		console.log(app.timer._ticks);
-	})
-	})
-	// this.recordbutton = new Button(recordButtonElement);
+		// app.timeline.createThumbnail();
+		if (app.timer.running()) {
+			app.timer.stop();
+		}
+		else {
+			app.timer.start();
+			app.timer.bind(this.frameInterval + ' milliseconds', function(){
+				app.currentTime = app.timer._ticks;
+				console.log(app.currentTime);
+			});
+		}
+	}); // close bind
+
 
 	var playButtonElement = $('#play');
 	playButtonElement.on('tap', function() {
 		animationArea.playAllAnimations();
 	});
+
 	playButtonElement.bind('click', function() {
-		animationArea.playAllAnimations();
+		app.timer.clear();
+		app.timer.start();
+		app.timer.bind(this.frameInterval + ' milliseconds', function(){
+			app.currentTime = app.timer._ticks;
+			animationArea.moveObjects(app.currentTime);
+		})	
 	});
 
 	// temporary button

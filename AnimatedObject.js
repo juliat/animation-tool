@@ -6,16 +6,12 @@ function AnimatedObject(name, imageFile) {
 	this.objectName = name;
 	// these are hardcoded defaults for now
 	this.sprites = [];
-	this.animations = [];
-	this.currentAnimation = {
-		startTime : 0,
-		movements :[]
-	}
+	this.animation = {};
+	this.isSelected = false;
 	this.objectController = null;
 	this.imageFile = imageFile;
 	this.canvasElement = null;
 	this.addToAnimatedArea();
-	this.paused = false; // might delete this
 }
 
 AnimatedObject.prototype.addToAnimatedArea = function() {
@@ -56,7 +52,7 @@ AnimatedObject.prototype.bindMovementEvents = function() {
 		animatedObject.select();
 	});
 	this.canvasElement.on('dragstart touchstart', function(event) {
-		console.log('touchstart')
+		console.log('touchstart');
 		startMoveTime = event.timeStamp;
 	})
 	this.canvasElement.on('dragmove touchmove', function(event){
@@ -64,19 +60,13 @@ AnimatedObject.prototype.bindMovementEvents = function() {
 		movement = {
 			y: animatedObject.canvasElement.getY(),
 			x: animatedObject.canvasElement.getX(),
-			deltaTimestamp: event.timeStamp - startMoveTime
+			deltaTimestamp: event.timeStamp - startMoveTime, // this may no longer matter
+			time: app.currentTime
 		}
 		animatedObject.recordMovement(movement);
 	});
 	this.canvasElement.on('dragend touchend', function() {
 		console.log('dragend');	
-		// save this animation and get ready to record another
-		// debugger;
-		animatedObject.animations.push(animatedObject.currentAnimation);
-		animatedObject.currentAnimation = {
-			startTime: 0,
-			movements : []
-		};
 	});
 }
 
@@ -97,7 +87,6 @@ AnimatedObject.prototype.createController = function() {
 	});
 }
 
-/* written for DOM, not kinetic.js */
 AnimatedObject.prototype.select = function() {
 	// deselect and disable all draggable objects
 	$('#objectsList li').removeClass('selected');
@@ -106,11 +95,13 @@ AnimatedObject.prototype.select = function() {
 	for (i = 0; i < allObjects.length; i++) {
 		var obj = allObjects[i].canvasElement;
 		obj.setDraggable(false);
+		obj.isSelected = false;
 	}
 	
 	// and only select and enable this one
 	this.objectController.addClass('selected');
 	this.canvasElement.setDraggable(true)
+	obj.isSelected = true;
 }
 
 AnimatedObject.prototype.addSprite =  function(params) {
@@ -129,6 +120,7 @@ AnimatedObject.prototype.playAnimation = function() {
 			var duration = movement['deltaTimestamp'] - lastMovement['deltaTimestamp'];
 			movement['duration'] = duration;
 			var animatedObject = this;
+
 			if (this.paused === false) {
 				// closure to make sure movement var works
 				(function(movement) {
@@ -149,13 +141,12 @@ AnimatedObject.prototype.pauseAnimation = function() {
 AnimatedObject.prototype.performMovement = function(movement) {
 	console.log('performing movement');
 	console.log(movement);
-	// debugger;
 	this.canvasElement.setX(movement['x']);
 	this.canvasElement.setY(movement['y']);
 	app.animationArea.stage.draw();
 }
 
 AnimatedObject.prototype.recordMovement = function(movement) {
-	this.currentAnimation.movements.push(movement);
-	console.log(this.currentAnimation.movements);
+	this.animation[movement['time']+''] = movement;
+	console.log(this.animation);
 }

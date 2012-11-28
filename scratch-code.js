@@ -40,3 +40,12 @@ Timer.prototype.currentTime = function() {
     var currentRelativeTime = currentAbsoluteTime - this.absoluteStart;
     return currentRelativeTime; // time since we started recording
 };
+
+
+		// save this animation and get ready to record another
+		// debugger;
+		animatedObject.animations.push(animatedObject.currentAnimation);
+		animatedObject.currentAnimation = {
+			startTime: 0,
+			movements : []
+		};
