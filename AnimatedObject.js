@@ -55,21 +55,28 @@ AnimatedObject.prototype.bindMovementEvents = function() {
 	this.canvasElement.on('click', function() {
 		animatedObject.select();
 	});
-	this.canvasElement.on('dragstart', function(event) {
-		// debugger;
+	this.canvasElement.on('dragstart touchstart', function(event) {
+		console.log('touchstart')
 		startMoveTime = event.timeStamp;
 	})
-	this.canvasElement.on('dragmove', function(event){
-		// console.log('dragmove');
-		// console.log(animatedObject.objectName +', x=' + event.offsetX +', y=' +event.offsetY);
-		movement = {
-			y: animatedObject.canvasElement.getY(),
-			x: animatedObject.canvasElement.getX(),
-			deltaTimestamp: event.timeStamp - startMoveTime
+	this.canvasElement.on('dragmove touchmove', function(event){
+		console.log('dragmove');
+		if (event.type === "touchmove") {
+			movement = {
+				y: event.targetTouches[0]['clientY'],
+				x: event.targetTouches[0]['clientX'],
+			}
 		}
+		else {
+			movement = {
+				y: animatedObject.canvasElement.getY(),
+				x: animatedObject.canvasElement.getX(),
+			}
+		}
+		movement['deltaTimestamp'] = event.timeStamp - startMoveTime;
 		animatedObject.recordMovement(movement);
 	});
-	this.canvasElement.on('dragend', function() {
+	this.canvasElement.on('dragend touchend', function() {
 		console.log('dragend');	
 		// save this animation and get ready to record another
 		// debugger;

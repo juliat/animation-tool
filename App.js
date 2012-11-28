@@ -24,21 +24,27 @@ function App() {
 	this.animationArea = animationArea;
 
 	// initialize record, play buttons
-	var recordButtonElement = document.getElementById('record');
+	var recordButtonElement = $('#record');
+	recordButtonElement.on("tap", function(){
+		app.timeline.createThumbnail();
+	});
 	// temporary binding for debugging
-	recordButtonElement.addEventListener('click', function() {
+	recordButtonElement.bind('click', function() {
 		app.timeline.createThumbnail();
 	})
 	// this.recordbutton = new Button(recordButtonElement);
 
-	var playButtonElement = document.getElementById('play');
-	playButtonElement.addEventListener('click', function() {
+	var playButtonElement = $('#play');
+	playButtonElement.on('tap', function() {
+		animationArea.playAllAnimations();
+	});
+	playButtonElement.bind('click', function() {
 		animationArea.playAllAnimations();
 	});
 
 	// temporary button
-	var pauseButtonElement = document.getElementById('pause');
-	pauseButtonElement.addEventListener('click', function() {
+	var pauseButtonElement = $('#pause');
+	pauseButtonElement.bind('click', function() {
 		animationArea.pauseAllAnimations();
 	});
 
