@@ -1,7 +1,47 @@
-/* Timeline class */
+/* Timeline class 
+ * =================================================================
+ * Unfinished, and currently not in use.
+ * 
+ * Would handle the UI for time display and nav, creating thumbnail images
+ * of the animation area and allowing the user to move backward and
+ * forward freely through the animation.
+*/
 function Timeline() {
 	this.timelineElement = $("#timeline");
 }
+
+
+/* Creates thumbnail snapshots of the animationArea for use in the timeline
+ *
+ * Note: 
+ * Could also use for exporting animation to images, would just have to
+ * adjust the quality of the images
+*/
+Timeline.prototype.createThumbnail = function() {
+	var timeline = this;
+	var config = {
+		// once the thumbails ready, add it to the timeline
+		callback: function(result) {
+			timeline.addThumbnailToTimeline(result);
+		},
+		mimeType: 'image/jpeg',
+		// just thumbnails, so using lowest quality
+		quality: 0.1
+	};
+	// convert the animationArea stage to an image
+	app.animationArea.stage.toImage(config);
+}
+
+
+/* Adds thumbnail images to the timeline */
+Timeline.prototype.addThumbnailToTimeline = function(thumbnail) {
+	this.framesList.append(thumbnail);
+	thumbnail.style.height = '4em';
+}
+
+
+/* Not implemented
+ * -----------------------------------------------------------------------------
 
 Timeline.prototype.getCurrentTime = function() {
 
@@ -20,21 +60,4 @@ Timeline.prototype.moveLine = function() {
 Timeline.prototype.updateAnimationArea = function(){
 
 }
-
-/* using html2canvas */
-Timeline.prototype.createThumbnail = function() {
-	var timeline = this;
-	var config = {
-		callback: function(result) {
-			timeline.addThumbnailToTimeline(result);
-		},
-		mimeType: 'image/jpeg',
-		quality: 0.1
-	};
-	app.animationArea.stage.toImage(config);
-}
-
-Timeline.prototype.addThumbnailToTimeline = function(thumbnail) {
-	this.framesList.append(thumbnail);
-	thumbnail.style.height = '4em';
-}
+*/

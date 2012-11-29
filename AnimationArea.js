@@ -81,14 +81,10 @@ AnimationArea.prototype.updateZPositions = function() {
 }
 
 
-/* search for one object in this area by name */
+/* Search for one object in this area by name */
 AnimationArea.prototype.findAnimatedObject = function(name) {
 	var searchSpace = this.animatedObjects;
     return $.grep(searchSpace, function(obj){
       return obj.objectName === name;
     });
-};
-
-AnimationArea.prototype.mapToAllAnimations = function(functionToMap) {
-
 };

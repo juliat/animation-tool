@@ -154,3 +154,7 @@ AnimatedObject.prototype.deselect = function() {
 			if ((time > app.endTime) && (time % 10 === 0)) {
 				// can't do thumbnails because it slows things down too much
 				// app.timeline.createThumbnail();
+
+AnimationArea.prototype.mapToAllAnimations = function(functionToMap) {
+
+};

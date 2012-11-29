@@ -1,4 +1,7 @@
-/* Animated Object Class */
+/* Animated Object Class 
+ * ================================================================
+*/
+
 
 /* create a new animated object */
 function AnimatedObject(name, imageFile) {

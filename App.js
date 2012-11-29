@@ -19,9 +19,6 @@ function App() {
 	this.timer = new Timer(timerResolution);
 	this.setupTimer();
 
-	// initialize the Timeline object
-	this.timeline = new Timeline();
-
 	// initialize the animationArea
 	var animationArea = new AnimationArea();
 	this.animationArea = animationArea;
