@@ -1,6 +1,5 @@
 body * {
 	font-family: "helvetica neue", helvetica, arial, sans-serif;
-	font-size: 1.15em;
 	font-weight: bold;
 	letter-spacing: 0.5px;
 }
@@ -14,17 +13,17 @@ body * {
 }
 
 #timeControlsButtons, #objectControls {
-	width: 20%;
+	width: 15%;
 	float: left;
 }
 
 #timelineContainer, #animationArea {
-	width: 80%;
+	width: 85%;
 	float: left;
 }
 
 #timelineContainer, #timeControlsButtons {
-	height: 5.25em;
+	height: 4em;
 }
 
 #timeControlsButtons {

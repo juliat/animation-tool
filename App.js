@@ -74,6 +74,17 @@ function App() {
 		e.preventDefault();
 		$('#addObjectModal').reveal();
 	});
+
+	var form = $('#addObjectModal form');
+	form.on('submit', function(event) {
+		event.preventDefault();
+		// console.log('submit');
+		$('#addObjectModal').trigger('reveal:close');
+		var name = $('#submitObjectName').val();
+		var file = $('#submitObjectUrl').val();
+		var animatedObj = new AnimatedObject(name, file);
+		app.animationArea.addAnimatedObject(animatedObj);
+	});
 }
 
 App.prototype.record = function(params) {

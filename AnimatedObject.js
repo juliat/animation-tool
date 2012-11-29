@@ -12,6 +12,7 @@ function AnimatedObject(name, imageFile) {
 	this.imageFile = imageFile;
 	this.canvasElement = null;
 	this.addToAnimatedArea();
+	this.hidden = false;
 }
 
 AnimatedObject.prototype.addToAnimatedArea = function() {

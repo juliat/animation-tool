@@ -73,3 +73,10 @@ Timer.prototype.currentTime = function() {
 			animationArea.moveObjects(app.currentTime);
 		});
 	});
+
+
+	AnimatedObject.prototype.hide = function() {
+	this.hidden = true;
+	this.canvasElement.hide();
+	this.objectController.hide();
+}

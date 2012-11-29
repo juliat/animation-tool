@@ -43,13 +43,16 @@
 		</div>
 
 		<div id="addObjectModal" class="reveal-modal">
-			<h1>Upload a new image for your animation here</h1>
+			<h1>Add a new image for your animation here</h1>
 			<form>
 				<label>Name</label>
-				<input type="text">
-				<label>Image File</label>
-				<input type="file">
-			<a class="close-reveal-modal">&#215;</a>
+				<input type="text" id="submitObjectName"/>
+				<label>Image Url</label>
+				<p>Search for an image online. When you find one you want, copy and paste its link here.</p>
+				<input type="text" id="submitObjectUrl"/>
+				<button id="submitObject">Add it!</button>
+				<a class="close-reveal-modal">&#215;</a>
+			</form>
 		</div>
 	</body>
 </html>
