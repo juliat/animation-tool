@@ -117,8 +117,15 @@ App.prototype.setupTimer = function() {
 			app.animationArea.moveObjects(time); 
 
 			// and periodically update the time on the UI
+			var currentTime = $('#currentTime')[0];
 			if (time % 10 === 0) {
-				$('#currentTime')[0].innerHTML = 'Recording. Time is: ' + time;
+				// if recording
+				if (app.isPlaying === false) {
+					currentTime.innerHTML = 'Recording. Time is: ' + time;
+				}
+				else {
+					currentTime.innerHTML = 'Playing...';
+				}
 			}
 
 			// if the animation is playing back and goes past the end time, then 
@@ -126,6 +133,10 @@ App.prototype.setupTimer = function() {
 			if (app.isPlaying === true) {
 				if (time > app.endTime) {
 					app.stopPlaying();
+					// update message
+					currentTime.innerHTML = "The animation is done playing. \
+											Press the play button to see the animation again \
+											or press the record button to edit or extend it.";
 				}
 			}
 		}
@@ -197,9 +208,6 @@ App.prototype.stopPlaying = function(){
  */
 App.prototype.addAnimatedObjects = function() {
 	var objects = [
-		{'name': "Background", 
-		 'file' : "http://greywoolfetarot.files.wordpress.com/2010/04/tardiswallpaperrm4.png"
-		},
 		{'name': "StickMan", 'file': "animated-images/stick-figure.jpg"},
 		{'name': "Tardis", 'file': "animated-images/tardis.png"}
 	];

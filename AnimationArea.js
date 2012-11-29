@@ -70,7 +70,7 @@ AnimationArea.prototype.updateZPositions = function() {
 	var controllersList = $('#objectsList');
 	var objectControllers = controllersList.children();
 	var i;
-	for (i= 0 i < objectControllers.length; i++) {
+	for (i = 0; i < objectControllers.length; i++) {
 		// objectName is the text in the objectController list item
 		var objectName = objectControllers[i].innerHTML;
 		// layers are named for the object they hold
