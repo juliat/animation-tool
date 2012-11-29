@@ -62,7 +62,7 @@ AnimatedObject.prototype.bindMovementEvents = function() {
 		movement = {
 			y: animatedObject.canvasElement.getY(),
 			x: animatedObject.canvasElement.getX(),
-			deltaTimestamp: event.timeStamp - startMoveTime, // this may no longer matter
+			deltaTimestamp: event.timeStamp - startMoveTime,
 			time: app.currentTime
 		}
 		animatedObject.recordMovement(movement);
@@ -73,7 +73,10 @@ AnimatedObject.prototype.createController = function() {
 	// create a controller for this animated object	
 	var objectControllerId = this.objectName + 'Controller';
 
-	app.objectsListControl.append('<li id="' + objectControllerId + '" class="touchable">'+ this.objectName + '</li>');
+	$('#objectsList').append('<li id="' + objectControllerId + '" class="touchable">'+ 
+							  this.objectName + 
+							'</li>');
+
 	this.objectController = $('#'+ objectControllerId);
 }
 
@@ -104,6 +107,30 @@ AnimatedObject.prototype.recordMovement = function(movement) {
 	console.log(this.animation);
 }
 
+
+AnimatedObject.prototype.playAnimation = function() {
+	if (this.animation.length !== 0) {
+		var animation = this.animation;
+		var numMovements = animation.movements.length;
+		var i = 1;
+		while (i < numMovements) {
+			var movement = animation.movements[i];
+			var lastMovement = animation.movements[i-1];
+			var animatedObject = this;
+
+			if (this.paused === false) {
+				// closure to make sure movement var works
+				(function(movement) {
+					setTimeout(function(){
+						animatedObject.performMovement(movement)
+					}, movement['deltaTimestamp']);
+				}(movement));
+			}
+			i++;
+		}
+	}
+}
+
 /*
 AnimatedObject.prototype.createThumbnail = function() {
 	var animatedObject = this;
@@ -123,28 +150,3 @@ AnimatedObject.prototype.addThumbnailToController = function(image){
 	});
 }
 */
-
-AnimatedObject.prototype.playAnimation = function() {
-	if (this.animation.length !== 0) {
-		var animation = this.animation;
-		var numMovements = animation.movements.length;
-		var i = 1;
-		while (i < numMovements) {
-			var movement = animation.movements[i];
-			var lastMovement = animation.movements[i-1];
-			var duration = movement['deltaTimestamp'] - lastMovement['deltaTimestamp'];
-			movement['duration'] = duration;
-			var animatedObject = this;
-
-			if (this.paused === false) {
-				// closure to make sure movement var works
-				(function(movement) {
-					setTimeout(function(){
-						animatedObject.performMovement(movement)
-					}, movement['deltaTimestamp']);
-				}(movement));
-			}
-			i++;
-		}
-	}
-}

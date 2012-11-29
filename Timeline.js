@@ -1,8 +1,6 @@
 /* Timeline class */
 function Timeline() {
-	this.timelineElement = document.getElementById("timeline");
-	this.currentTime = 0;
-	this.framesList = $('#frames')
+	this.timelineElement = $("#timeline");
 }
 
 Timeline.prototype.getCurrentTime = function() {

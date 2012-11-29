@@ -151,27 +151,6 @@ AnimatedObject.prototype.deselect = function() {
 	})
 
 	
-AnimatedObject.prototype.playAnimation = function() {
-	if (this.animation.length !== 0) {
-		var animation = this.animation;
-		var numMovements = animation.movements.length;
-		var i = 1;
-		while (i < numMovements) {
-			var movement = animation.movements[i];
-			var lastMovement = animation.movements[i-1];
-			var duration = movement['deltaTimestamp'] - lastMovement['deltaTimestamp'];
-			movement['duration'] = duration;
-			var animatedObject = this;
-
-			if (this.paused === false) {
-				// closure to make sure movement var works
-				(function(movement) {
-					setTimeout(function(){
-						animatedObject.performMovement(movement)
-					}, movement['deltaTimestamp']);
-				}(movement));
-			}
-			i++;
-		}
-	}
-}
+			if ((time > app.endTime) && (time % 10 === 0)) {
+				// can't do thumbnails because it slows things down too much
+				// app.timeline.createThumbnail();
