@@ -16,7 +16,13 @@ window.onload = function() {
 	});
 };
 
-/* Application Class  */
+/* Application Class  
+ * ============================================================================
+*/
+
+/* Constructor:
+ * Sets variables for the app object and initializes sub-objects
+*/
 function App() {
 	var app = this;
 
@@ -39,36 +45,17 @@ function App() {
 	this.animationArea = animationArea;
 }
 
+
+/* Initialize necessary elements (mostly UI buttons) so that the user
+ * can interact with the app.
+*/
 App.prototype.init = function() {
-	/* initialize the record button and bind it to record 
-	 * and click in response to user input 
-	*/
+	/* initialize the record button*/
 	this.recordButton = $('#record');
 	this.playButton = $('#play');
+
+	this.setupRecording();
 	
-	this.recordButton.bind('click', function() {
-		var self = $(app.recordButton);
-
-		if (app.timeRolling()) {
-			app.timer.stop();
-			app.endTime = app.currentTime;
-			app.timer._ticks = 0;
-			self.html("Record")
-				.toggleClass('stoppedButton')
-				.toggleClass('recordingButton');
-			app.playButton.attr("disabled", false);
-		}
-
-		else {
-			app.playButton.attr("disabled", true);
-			app.timer.start();
-			self.html("Stop")
-				.toggleClass('stoppedButton')
-				.toggleClass('recordingButton');
-		}
-	}); // close bind
-
-
 	/* make objects list sortable to change the 
 	 * zindex of animatedObjects
 	*/
@@ -78,21 +65,63 @@ App.prototype.init = function() {
     	}
     });
 
-	/* initialize the addObject button */
+	/* initialize the addObject button so that when it's clicked
+	 * it reveals the addObject modal window */
 	var addAnimatedObjectButton = $('#addObject');
 	addAnimatedObjectButton.bind('click', function(e){
 		e.preventDefault();
 		$('#addObjectModal').reveal();
 	});
 
-	/* Setup new object form */
+	/* Setup new object form (contained in a modal) */
 	this.setupNewObjectForm();
 
-	/* bind the play button to the handler function */
+	// Wire up the play button
 	$('#play').bind('click', function() {
 		app.playButtonHandler();
 	});
 }
+
+/* Links up the record button with the application (the timer in particular)
+ * so when the user clicks they can start or stop recording.
+*/
+App.prototype.setupRecording = function() {
+	this.recordButton.bind('click', function() {
+		var self = $(app.recordButton);
+		/* if time is rolling, then clicking this button means
+ 		 * that the user wants to stop recording
+ 		*/
+		if (app.timeRolling()) {
+			// stop the timer
+			app.timer.stop();
+			// save the currentTime as the end time of the animation
+			app.endTime = app.currentTime;
+			// reset the timer (so that when we play or record again 
+ 		    // it starts from the beginning)
+			app.timer._ticks = 0;
+			// change the button back into being a 'Record' button
+			self.html("Record")
+				.toggleClass('stoppedButton')
+				.toggleClass('recordingButton');
+			// enable the play button (it's OK to play now that we're
+ 		    //  not recording)
+			app.playButton.attr("disabled", false);
+		}
+		/* time isn't rolling, so the user is pressing this button to 
+		 * start recording
+		*/
+		else {
+			// disable the play button (can't play while recording)
+			app.playButton.attr("disabled", true);
+			// start the timer to start recording
+			app.timer.start();
+			// change the button into a stop button
+			self.html("Stop")
+				.toggleClass('stoppedButton')
+				.toggleClass('recordingButton');
+		}
+	}); 
+};
 
 
 /* Binds the app timer to play the animation when the timer is running */
@@ -124,6 +153,9 @@ App.prototype.setupTimer = function() {
 	});
 }
 
+/* Handles 'submission' of the new Object form, creating a new
+ * animated object using the given name and url
+ */
 App.prototype.setupNewObjectForm = function() {
 	var form = $('#addObjectModal form');
 	form.on('submit', function(event) {
@@ -137,42 +169,53 @@ App.prototype.setupNewObjectForm = function() {
 	});
 };
 
+/* Helper function, mostly to make checks for whether app
+ * is recording a little cleaner and more readable */
 App.prototype.timeRolling = function() {
 	return app.timer.running();
 };
 
+
+/* Handles clicks on the play/stop button. */
 App.prototype.playButtonHandler = function() {
-	/* if the app is not currently playing,
-	 *  - start the timer, disable recording for all animated objects
-	 *  - disable the record button
-	 *  - and change the text on the play button to be "stop"
-	*/
+	// if the app is not currently playing
 	if (app.timeRolling() === false) {
 		app.isPlaying = true;
+		// start the timer
 		app.timer.start();
+		// disable recording for all animated objects
 		app.animationArea.recordable(false);
+		// disable the record button
 		app.recordButton.attr("disabled", true);
+		// change the text on the play button to be "stop"
 		app.playButton[0].innerHTML = 'Stop';
 	}
-	/* if time is rolling and a user presses the "Stop" button (which doubles
-	 * as the play button), then stop time, reset the timer, enable the record button,
-	 * change the stop button back into the play button, and enable recording for
-	 * all animated objects
-	*/
+	/* if time is rolling and a user presses the "Stop" button */
 	else if (app.timeRolling() === true) {
 		app.stopPlaying();
 	}
 }
 
+
+/* Handles user clicks on the "stop" half of the "play" button
+ * Note:
+ * - might be able to generalize this to handle stopRecording as well
+ */
 App.prototype.stopPlaying = function(){
+	// stop timeRolling
 	app.timer.stop();
 	app.timer._ticks = 0; // reset to start
 	app.recordButton.attr("disabled", false);
+	// change the stop button back into the play button
 	app.playButton[0].innerHTML = 'Play';
+	// enable recording for all animated objects
 	app.animationArea.recordable(true);
 }
 
-// grab a new image to animate
+
+/* TESTING FUNCTION 
+ * Initializes the app with three iamges for testing purposes
+ */
 App.prototype.addAnimatedObjects = function() {
 	var objects = [
 		{'name': "Background", 
@@ -181,6 +224,7 @@ App.prototype.addAnimatedObjects = function() {
 		{'name': "StickMan", 'file': "animated-images/stick-figure.jpg"},
 		{'name': "Tardis", 'file': "animated-images/tardis.png"}
 	];
+	// create a new animatedObject for each of the above objects
 	var i;
 	for (i=0; i < objects.length; i++) {
 		var animatedObj = new AnimatedObject(objects[i]['name'], objects[i]['file']);
