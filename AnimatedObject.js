@@ -49,11 +49,12 @@ AnimatedObject.prototype.bindMovementEvents = function() {
 	// this should work on dragstart but is being buggy :/
 	var startMoveTime;
 	this.canvasElement.on('click touchstart', function() {
-		animatedObject.select();
+		animatedObject.toggleSelect();
 	});
 	this.canvasElement.on('dragstart touchstart', function(event) {
 		console.log('touchstart');
 		startMoveTime = event.timeStamp;
+		// animatedObject.toggleSelect();
 	})
 	this.canvasElement.on('dragmove touchmove', function(event){
 		console.log('dragmove');
@@ -75,7 +76,7 @@ AnimatedObject.prototype.createController = function() {
 	var objectControllerId = this.objectName + 'Controller';
 
 	// could not use app var here and just go straight to DOM. tradeoffs?
-	app.objectsListControl.append('<li id="' + objectControllerId + '">'+ this.number + ") " + this.objectName + '</li>');
+	app.objectsListControl.append('<li id="' + objectControllerId + '">'+ this.objectName + '</li>');
 	this.objectController = $('#'+ objectControllerId);
 
 	var animatedObj = this;
