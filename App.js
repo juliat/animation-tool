@@ -90,6 +90,8 @@ App.prototype.setupRecording = function() {
 		 * start recording
 		*/
 		else {
+			// record starting positions for all objects
+			app.animationArea.recordStartPositions();
 			// disable the play button (can't play while recording)
 			app.playButton.attr("disabled", true);
 			// start the timer to start recording
@@ -209,8 +211,10 @@ App.prototype.stopPlaying = function(){
  */
 App.prototype.addAnimatedObjects = function() {
 	var objects = [
-		{'name': "StickMan", 'file': "animated-images/stick-figure.jpg"},
-		{'name': "Tardis", 'file': "animated-images/tardis.png"}
+		{'name': "Eleventh Doctor", 'file': "animated-images/eleventhdoctor.png"},
+		{'name': "Tenth Doctor", 'file': "animated-images/tenthdoctor.png"},
+		{'name': "TARDIS", 'file': "animated-images/tardis2.png"},
+		{'name': "London", 'file': "animated-images/london-with-daleks.jpg"}
 	];
 	// create a new animatedObject for each of the above objects
 	var i;

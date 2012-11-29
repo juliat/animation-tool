@@ -72,11 +72,11 @@ AnimatedObject.prototype.bindMovementEvents = function() {
 		startMoveTime = event.timeStamp;
 	});
 	// record touch and drag movements
-	this.canvasElement.on('dragmove touchmove', function(event){
+	this.canvasElement.on('dragstart touchstart dragmove touchmove', function(event){
 		movement = {
 			y: animatedObject.canvasElement.getY(),
 			x: animatedObject.canvasElement.getX(),
-			deltaTimestamp: event.timeStamp - startMoveTime,
+			// deltaTimestamp: event.timeStamp - startMoveTime,
 			time: app.currentTime
 		}
 		animatedObject.recordMovement(movement);

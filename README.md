@@ -1,5 +1,7 @@
 animation-tool
 ==============
+By Julia Teitelbaum
+11/29/2012
 
 # Description
 This is a tool to create short HTML5/Javascript animations, based on the animation app demoed in Bret Victor's Animation App Demoed in the Talk Inventing on Principle. 
@@ -28,3 +30,8 @@ To use my app, a person submits links to the images (.pngs and .jpegs) that they
 - Reveal Modal by Zurb
 - Timer.js - https://github.com/fschaefer/Timer.js
 - Touch Punch - https://github.com/furf/jquery-ui-touch-punch
+
+# Sources for Test Images
+- Doctors - http://browse.deviantart.com/?q=the+doctor&offset=72#/d2y5mv3
+- London - http://www.markbrake.com/sci-fi/machine/attachment/7o1d-copy/
+- TARDIS - http://browse.deviantart.com/?qh=&section=&global=1&q=tardis&offset=24#/dg89j3

@@ -43,6 +43,20 @@ AnimationArea.prototype.recordable = function(allowRecording) {
 	}
 };
 
+/* Record position of all objects at the beginning of an animation */
+AnimationArea.prototype.recordStartPositions = function () {
+	var i;
+	for (i=0; i < this.animatedObjects.length; i++) {
+		var animatedObject = this.animatedObjects[i]
+		var canvasElement = animatedObject.canvasElement;
+		var movement = {
+			time : 10,
+			x : canvasElement.getX(),
+			y : canvasElement.getY()
+		}
+		animatedObject.recordMovement(movement);
+	}
+};
 
 /* Moves all objects to the location at which they were recorded
  * at the given time.

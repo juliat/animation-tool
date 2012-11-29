@@ -63,6 +63,7 @@ body * {
 }
 
 #timelineContainer {
+    padding: 0.75em 1em;
 	/* overflow-x: scroll; */
 }
 
