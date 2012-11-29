@@ -28,6 +28,7 @@ To use my app, a person submits links to the images (.pngs and .jpegs) that they
 - jQuery
 - jQuery UI
 - Reveal Modal by Zurb
+- Hammer.js
 - Timer.js - https://github.com/fschaefer/Timer.js
 - Touch Punch - https://github.com/furf/jquery-ui-touch-punch
 
