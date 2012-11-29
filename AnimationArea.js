@@ -26,14 +26,14 @@ AnimationArea.prototype.addAnimatedObject = function(animatedObject) {
 	this.animatedObjects.push(animatedObject);
 };
 
-/* iterates over all animated objects in the animation area
-   and calls playAnimation on each one
+/* 
+   allowRecording is boolean
 */
-AnimationArea.prototype.playAllAnimations = function() {
+AnimationArea.prototype.recordable = function(allowRecording) {
 	var i;
 	for (i=0; i < this.animatedObjects.length; i++) {
 		var animatedObject = this.animatedObjects[i];
-		animatedObject.playAnimation();
+		animatedObject.recordable(allowRecording);
 	}
 };
 

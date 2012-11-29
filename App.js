@@ -3,6 +3,12 @@ window.onload = function() {
 	app = new App();
 	// create new object to animate for testing
 	app.addAnimatedObjects();
+
+
+	$('#objectControls').css(
+	{
+		'height': $(window).height()
+	});
 };
 
 /* Application Class 
@@ -41,43 +47,42 @@ function App() {
 
 	// initialize record, play buttons
 	var recordButtonElement = $('#record');
-	/*
-	recordButtonElement.on("tap", function(){
-		// app.timeline.createThumbnail
-		
-	});
-	*/
 	
-	var app = this;
-	// temporary binding for debugging
 	recordButtonElement.bind('click', function() {
 		var self = $(recordButtonElement);
 
 		if (app.timer.running()) {
 			app.timer.stop();
-			app.endTime = app.timer._ticks;
 			app.timer._ticks = 0; // reset to start
-			self.html("Start").toggleClass('stoppedButton').toggleClass('recordingButton');
+			app.endTime = app.timer._ticks;
+			self.html("Record")
+				.toggleClass('stoppedButton')
+				.toggleClass('recordingButton');
+			$('#play').attr("disabled", false);
 		}
 		else {
+			$('#play').attr("disabled", true);
 			app.timer.start();
-			self.html("Stop").toggleClass('stoppedButton').toggleClass('recordingButton');
+			self.html("Stop")
+				.toggleClass('stoppedButton')
+				.toggleClass('recordingButton');
 		}
 	}); // close bind
+
+	
+	$('#play').bind('click', function() {
+		app.play();
+	});
 
 
 	this.objectsListControl = $("#objectsList");
 
-	/* make objects list sortable */
+	/* make objects list sortable  to change the zindex of animatedObjects*/
     $("ul.sortable-list").sortable({
-    	/*handle: 'span',*/
     	update: function(event) {
     		animationArea.updateZPositions();
     	}
     });
-    /* ({
-      handle: '.touchable'
-    }) */
 
 	// initialize add object button
 	var addAnimatedObjectButton = $('#addObject');
@@ -98,20 +103,30 @@ function App() {
 	});
 }
 
-App.prototype.record = function(params) {
-	// figure out which element is selected
-	// tell it to record its position every 1/24 of a second
-	// activate the timeline
+App.prototype.play = function() {
+	var recordButton = $('#record');
+	var playButton = $('#play')[0];
+	if (app.timer.running() === false) {
+		app.animationArea.recordable(false);
+		app.timer.start();
+		recordButton.attr("disabled", true);
+		playButton.innerHTML = 'Stop';
+	}
+	else if ((app.timer.running() === true)) {
+		app.timer.stop();
+		app.timer._ticks = 0; // reset to start
+		recordButton.attr("disabled", false);
+		playButton.innerHTML = 'Play';
+		app.animationArea.recordable(true);
+	}
 }
 
-App.prototype.play = function(params) {
-	// command all objects to animate themselves, make sure time offsets work
-}
-
-// upload a new image to animate
+// grab a new image to animate
 App.prototype.addAnimatedObjects = function() {
 	var objects = [
-		{'name': "Background", 'file' : "http://greywoolfetarot.files.wordpress.com/2010/04/tardiswallpaperrm4.png"},
+		{'name': "Background", 
+		 'file' : "http://greywoolfetarot.files.wordpress.com/2010/04/tardiswallpaperrm4.png"
+		},
 		{'name': "StickMan", 'file': "animated-images/stick-figure.jpg"},
 		{'name': "Tardis", 'file': "animated-images/tardis.png"}
 	];

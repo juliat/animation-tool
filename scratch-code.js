@@ -89,3 +89,89 @@ AnimationArea.prototype.pauseAllAnimations = function() {
 		animatedObject.pauseAnimation();
 	}
 };
+
+
+	var animatedObj = this;
+
+	// bind a click selection event to the controller
+	this.objectController.bind('click', function() {
+		console.log('clicked '+ objectControllerId);
+		if (animatedObj.isSelected === true) {
+			animatedObj.deselect();
+		}
+		else {
+			animatedObj.select();
+		}
+	});
+
+	AnimatedObject.prototype.deselect = function() {
+	if (this.isSelected === true) {
+		this.objectController.removeClass('selected');
+		this.canvasElement.setDraggable(false);
+		this.isSelected = false;
+	}
+}
+
+AnimatedObject.prototype.select = function() {
+	if (this.isSelected === false) {
+		/*
+		// deselect and disable all draggable objects
+		$('#objectsList li').removeClass('selected');
+		var allObjects = app.animationArea.animatedObjects;
+		var i;
+		for (i = 0; i < allObjects.length; i++) {
+			var obj = allObjects[i].canvasElement;
+			obj.setDraggable(false);
+			this.isSelected = false;
+		}
+		*/
+		// and only select and enable this one
+		this.objectController.addClass('selected');
+		this.canvasElement.setDraggable(true);
+		this.isSelected = true;
+	}
+}
+
+AnimatedObject.prototype.deselect = function() {
+
+}
+
+
+	this.canvasElement.on('mouseenter touchstart', function() {
+		console.log('mouseenter or touchstart');
+		animatedObject.select();
+	});
+
+
+		this.canvasElement.on('dragend touchend', function() {
+		animatedObject.deselect();
+	});
+	this.canvasElement.on('mouseexit', function(){
+		animatedObject.deselect();
+	})
+
+	
+AnimatedObject.prototype.playAnimation = function() {
+	if (this.animation.length !== 0) {
+		var animation = this.animation;
+		var numMovements = animation.movements.length;
+		var i = 1;
+		while (i < numMovements) {
+			var movement = animation.movements[i];
+			var lastMovement = animation.movements[i-1];
+			var duration = movement['deltaTimestamp'] - lastMovement['deltaTimestamp'];
+			movement['duration'] = duration;
+			var animatedObject = this;
+
+			if (this.paused === false) {
+				// closure to make sure movement var works
+				(function(movement) {
+					setTimeout(function(){
+						animatedObject.performMovement(movement)
+					}, movement['deltaTimestamp']);
+				}(movement));
+			}
+			i++;
+		}
+	}
+}

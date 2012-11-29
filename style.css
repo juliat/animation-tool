@@ -7,7 +7,7 @@ body * {
 	box-sizing: border-box;
 }
 
-#timelineContainer, #objectControls, #timeControlsButtons {
+#timelineContainer, #objectControls, #timeControlsButtons, #playWrapper {
 	background-color: #333;
 	color: #fff;
 }
@@ -17,13 +17,21 @@ body * {
 	float: left;
 }
 
-#timelineContainer, #animationArea {
-	width: 85%;
+#timelineContainer {
+	width: 79%;
 	float: left;
 }
 
-#timelineContainer, #timeControlsButtons {
+ #animationArea {
+ 	float: left;
+ 	width: 85%;
+ }
+
+#timelineContainer, #timeControlsButtons, #playWrapper {
 	height: 4em;
+	padding-top: 0.25%;
+	padding-right: 0.15%;
+	padding-left: 0.15%;
 }
 
 #timeControlsButtons {
@@ -55,7 +63,7 @@ body * {
 }
 
 #timelineContainer {
-	overflow-x: scroll;
+	/* overflow-x: scroll; */
 }
 
 #frames {
@@ -111,3 +119,10 @@ button:active {
 .stoppedButton:hover {
 	background: #fa473e;
 }
+
+#playWrapper {
+    width: 6%;
+    float: left;
+    border-left: 1px solid #888;
+}
+
