@@ -1,19 +1,20 @@
 /* AnimationArea Class
-contains all of the animated objects
-enforces bounds
-might be extensible
-when things get uploaded, they get added here
+==========================================================================
+Main role is to perform bulk operations on all animated objects.
 */
+
+/* Constructor */
 function AnimationArea() {
 	// hold onto animated objects
 	this.animatedObjects = [];
-	this.currentTime = 0;
-
 	this.areaElement = $('#animationArea');
 	this.stage = null;
 	this.init();
 };
 
+
+/* Setup a new Kinetic.js Stage (which can contain multiple HTML5 canvases) 
+*/
 AnimationArea.prototype.init = function() {
 	this.stage = new Kinetic.Stage({
 		container: 'animationArea',
@@ -22,12 +23,17 @@ AnimationArea.prototype.init = function() {
 	})
 };
 
+
+// Add an animatedObject
 AnimationArea.prototype.addAnimatedObject = function(animatedObject) {
 	this.animatedObjects.push(animatedObject);
 };
 
-/* 
-   allowRecording is boolean
+
+/* Enables or disables recording of motion for all animatedObjects
+ * 
+ * Parameters:
+ * allowRecording: boolean
 */
 AnimationArea.prototype.recordable = function(allowRecording) {
 	var i;
@@ -37,6 +43,14 @@ AnimationArea.prototype.recordable = function(allowRecording) {
 	}
 };
 
+
+/* Moves all objects to the location at which they were recorded
+ * at the given time.
+ *
+ * Parameters:
+ * time: integer, acts as a key to each animatedObject's map of times
+ *       to positions
+*/
 AnimationArea.prototype.moveObjects = function(time) {
 	var i;
 	for (i=0; i < this.animatedObjects.length; i++) {
@@ -48,16 +62,21 @@ AnimationArea.prototype.moveObjects = function(time) {
 	}	
 }
 
+
+/* Updates the layering/z indices of each animatedObject when the user
+ * drags to reorder them in the list of object controllers 
+*/
 AnimationArea.prototype.updateZPositions = function() {
 	var controllersList = $('#objectsList');
 	var objectControllers = controllersList.children();
 	var i;
-	var lastIndex = objectControllers.length -1;
-	for (i= lastIndex; i >= 0; i--) {
+	for (i= 0 i < objectControllers.length; i++) {
+		// objectName is the text in the objectController list item
 		var objectName = objectControllers[i].innerHTML;
+		// layers are named for the object they hold
 		var layerName ='.'+objectName+'Layer';
 		var objectLayer = this.stage.get(layerName)[0];
-		objectLayer.moveToTop();
+		objectLayer.moveToBottom();
 	}
 }
 
