@@ -1,3 +1,14 @@
+$.fn.addTouch = function() {
+  var obj = document.getElementsByClassName('touchable');
+  for(i=0; i<obj.length;i++){
+      obj[i].addEventListener("touchstart", iPadTouchHandler, false);
+      obj[i].addEventListener("touchmove", iPadTouchHandler, false);
+      obj[i].addEventListener("touchend", iPadTouchHandler, false);
+      obj[i].addEventListener("touchcancel", iPadTouchHandler, false);
+  }
+  return obj;
+}
+
 window.onload = function() {
 	// create a new instance of App
 	app = new App();
@@ -68,6 +79,18 @@ function App() {
 
 	this.objectsListControl = $("#objectsList");
 
+	/* make objects list sortable */
+    $("ul.sortable-list").sortable({
+    	update: function(event) {
+    		console.log(event);
+    		animationArea.updateZPositions();
+    	}
+    }
+    ).addTouch();
+    /* ({
+      handle: '.touchable'
+    }) */
+
 	// initialize add object button
 	var addAnimatedObjectButton = $('#addObject');
 	addAnimatedObjectButton.bind('click', function(e){
@@ -100,6 +123,7 @@ App.prototype.play = function(params) {
 // upload a new image to animate
 App.prototype.addAnimatedObjects = function() {
 	var objects = [
+		{'name': "Background", 'file' : "http://greywoolfetarot.files.wordpress.com/2010/04/tardiswallpaperrm4.png"},
 		{'name': "StickMan", 'file': "animated-images/stick-figure.jpg"},
 		{'name': "Tardis", 'file': "animated-images/tardis.png"}
 	];

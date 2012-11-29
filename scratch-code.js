@@ -80,3 +80,12 @@ Timer.prototype.currentTime = function() {
 	this.canvasElement.hide();
 	this.objectController.hide();
 }
+
+AnimationArea.prototype.pauseAllAnimations = function() {
+	debugger;
+	var i;
+	for (i=0; i < this.animatedObjects.length; i++) {
+		var animatedObject = this.animatedObjects[i];
+		animatedObject.pauseAnimation();
+	}
+};

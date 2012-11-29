@@ -24,6 +24,7 @@ To use my app, a person would upload the images (.pngs and .jpegs) that they wan
 
 # References
 http://ramkulkarni.com/blog/record-and-playback-drawing-in-html5-canvas/
+http://miguelrodelas.com/web/2011/11/09/make-jquery-ui-sortable-dragdrop-work-on-ipad-safari/
 
 # Libraries Used
 - jquery

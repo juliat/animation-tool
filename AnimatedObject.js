@@ -2,7 +2,7 @@
 
 /* create a new animated object */
 function AnimatedObject(name, imageFile) {
-	this.number = app.animationArea.animatedObjects.length + 1;
+	// this.number = app.animationArea.animatedObjects.length + 1;
 	this.objectName = name;
 	// these are hardcoded defaults for now
 	this.sprites = [];
@@ -10,6 +10,7 @@ function AnimatedObject(name, imageFile) {
 	this.isSelected = false;
 	this.objectController = null;
 	this.imageFile = imageFile;
+	this.layerCanvas = null;
 	this.canvasElement = null;
 	this.addToAnimatedArea();
 	this.hidden = false;
@@ -29,13 +30,19 @@ AnimatedObject.prototype.addToAnimatedArea = function() {
 	      draggable: false
 	    });
 
-	    var layer = new Kinetic.Layer();
+	    var layer = new Kinetic.Layer({
+	    	'name' : this.objectName + 'Layer',
+	    });
 
 	    // add the shape to the layer
 	    layer.add(kineticImage);
 
 	    // add the layer to the stage
 	    app.animationArea.stage.add(layer);
+
+	    this.layerCanvas = layer.canvas;
+
+	    debugger;
 	 	
 	 	// save kinetic object to object
 		animatedObject.canvasElement = kineticImage;
@@ -49,13 +56,14 @@ AnimatedObject.prototype.bindMovementEvents = function() {
 	var animatedObject = this;
 	// this should work on dragstart but is being buggy :/
 	var startMoveTime;
-	this.canvasElement.on('click touchstart', function() {
-		animatedObject.toggleSelect();
+	this.canvasElement.on('mouseenter touchstart', function() {
+		console.log('mouseenter or touchstart');
+		animatedObject.select();
 	});
 	this.canvasElement.on('dragstart touchstart', function(event) {
 		console.log('touchstart');
 		startMoveTime = event.timeStamp;
-		// animatedObject.toggleSelect();
+		animatedObject.select();
 	})
 	this.canvasElement.on('dragmove touchmove', function(event){
 		console.log('dragmove');
@@ -68,8 +76,11 @@ AnimatedObject.prototype.bindMovementEvents = function() {
 		animatedObject.recordMovement(movement);
 	});
 	this.canvasElement.on('dragend touchend', function() {
-		console.log('dragend');	
+		animatedObject.deselect();
 	});
+	this.canvasElement.on('mouseexit', function(){
+		animatedObject.deselect();
+	})
 }
 
 AnimatedObject.prototype.createController = function() {
@@ -77,7 +88,7 @@ AnimatedObject.prototype.createController = function() {
 	var objectControllerId = this.objectName + 'Controller';
 
 	// could not use app var here and just go straight to DOM. tradeoffs?
-	app.objectsListControl.append('<li id="' + objectControllerId + '">'+ this.objectName + '</li>');
+	app.objectsListControl.append('<li id="' + objectControllerId + '" class="touchable">'+ this.objectName + '</li>');
 	this.objectController = $('#'+ objectControllerId);
 
 	var animatedObj = this;
@@ -85,12 +96,26 @@ AnimatedObject.prototype.createController = function() {
 	// bind a click selection event to the controller
 	this.objectController.bind('click', function() {
 		console.log('clicked '+ objectControllerId);
-		animatedObj.toggleSelect();
+		if (animatedObj.isSelected === true) {
+			animatedObj.deselect();
+		}
+		else {
+			animatedObj.select();
+		}
 	});
 }
 
-AnimatedObject.prototype.toggleSelect = function() {
+AnimatedObject.prototype.deselect = function() {
+	if (this.isSelected === true) {
+		this.objectController.removeClass('selected');
+		this.canvasElement.setDraggable(false);
+		this.isSelected = false;
+	}
+}
+
+AnimatedObject.prototype.select = function() {
 	if (this.isSelected === false) {
+		/*
 		// deselect and disable all draggable objects
 		$('#objectsList li').removeClass('selected');
 		var allObjects = app.animationArea.animatedObjects;
@@ -100,16 +125,11 @@ AnimatedObject.prototype.toggleSelect = function() {
 			obj.setDraggable(false);
 			this.isSelected = false;
 		}
-
+		*/
 		// and only select and enable this one
 		this.objectController.addClass('selected');
 		this.canvasElement.setDraggable(true);
 		this.isSelected = true;
-	}
-	else {
-		this.objectController.removeClass('selected');
-		this.canvasElement.setDraggable(false);
-		this.isSelected = false;
 	}
 }
 

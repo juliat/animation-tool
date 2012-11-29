@@ -51,13 +51,26 @@ AnimationArea.prototype.moveObjects = function(time) {
 	}	
 }
 
-AnimationArea.prototype.pauseAllAnimations = function() {
+AnimationArea.prototype.updateZPositions = function() {
 	debugger;
+	var controllersList = $('#objectsList');
+	var objectControllers = controllersList.children();
 	var i;
-	for (i=0; i < this.animatedObjects.length; i++) {
-		var animatedObject = this.animatedObjects[i];
-		animatedObject.pauseAnimation();
+	var lastIndex = objectControllers.length -1;
+	for (i= lastIndex; i >= 0; i--) {
+		var objectName = objectControllers[i].innerHTML;
+		var object = this.findAnimatedObject(objectName);
+		console.log(object[0].layerCanvas);
 	}
+}
+
+
+/* search for one object in this area by name */
+AnimationArea.prototype.findAnimatedObject = function(name) {
+	var searchSpace = this.animatedObjects;
+    return $.grep(searchSpace, function(obj){
+      return obj.objectName === name;
+    });
 };
 
 AnimationArea.prototype.mapToAllAnimations = function(functionToMap) {
