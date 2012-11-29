@@ -23,9 +23,6 @@ AnimationArea.prototype.init = function() {
 };
 
 AnimationArea.prototype.addAnimatedObject = function(animatedObject) {
-	var number = this.animatedObjects.length;
-	// assign number to animated object
-	animatedObject.number = number;
 	this.animatedObjects.push(animatedObject);
 };
 
@@ -58,8 +55,9 @@ AnimationArea.prototype.updateZPositions = function() {
 	var lastIndex = objectControllers.length -1;
 	for (i= lastIndex; i >= 0; i--) {
 		var objectName = objectControllers[i].innerHTML;
-		//var object = this.findAnimatedObject(objectName);
-		var objectLayer = this.stage.get('.'+objectName+'Layer')[0].moveToTop();
+		var layerName ='.'+objectName+'Layer';
+		var objectLayer = this.stage.get(layerName)[0];
+		objectLayer.moveToTop();
 	}
 }
 

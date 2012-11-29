@@ -1,14 +1,3 @@
-$.fn.addTouch = function() {
-  var obj = document.getElementsByClassName('touchable');
-  for(i=0; i<obj.length;i++){
-      obj[i].addEventListener("touchstart", iPadTouchHandler, false);
-      obj[i].addEventListener("touchmove", iPadTouchHandler, false);
-      obj[i].addEventListener("touchend", iPadTouchHandler, false);
-      obj[i].addEventListener("touchcancel", iPadTouchHandler, false);
-  }
-  return obj;
-}
-
 window.onload = function() {
 	// create a new instance of App
 	app = new App();
@@ -81,12 +70,11 @@ function App() {
 
 	/* make objects list sortable */
     $("ul.sortable-list").sortable({
+    	/*handle: 'span',*/
     	update: function(event) {
-    		console.log(event);
     		animationArea.updateZPositions();
     	}
-    }
-    ).addTouch();
+    });
     /* ({
       handle: '.touchable'
     }) */

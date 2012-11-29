@@ -2,9 +2,8 @@
 
 /* create a new animated object */
 function AnimatedObject(name, imageFile) {
-	// this.number = app.animationArea.animatedObjects.length + 1;
 	this.objectName = name;
-	// these are hardcoded defaults for now
+	// these are defaults
 	this.sprites = [];
 	this.animation = {};
 	this.isSelected = false;

@@ -31,3 +31,4 @@ http://miguelrodelas.com/web/2011/11/09/make-jquery-ui-sortable-dragdrop-work-on
 - jquery ui
 - Reveal Modal by Zurb
 - https://github.com/fschaefer/Timer.js
+- https://github.com/furf/jquery-ui-touch-punch
