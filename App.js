@@ -192,6 +192,7 @@ App.prototype.playButtonHandler = function() {
  * - might be able to generalize this to handle stopRecording as well
  */
 App.prototype.stopPlaying = function(){
+	app.isPlaying = false;
 	// stop timeRolling
 	app.timer.stop();
 	app.timer._ticks = 0; // reset to start
