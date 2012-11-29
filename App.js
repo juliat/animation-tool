@@ -110,8 +110,7 @@ App.prototype.setupTimer = function() {
 
 			// and periodically update the time on the UI
 			if (time % 10 === 0) {
-				$('#currentTime')[0].innerHTML = 'Time: ' + time;
-				$('#endTime')[0].innerHTML = 'EndTime: ' + app.endTime;
+				$('#currentTime')[0].innerHTML = 'Recording. Time is: ' + time;
 			}
 
 			// if the animation is playing back and goes past the end time, then 
