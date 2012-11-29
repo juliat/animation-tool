@@ -52,15 +52,14 @@ AnimationArea.prototype.moveObjects = function(time) {
 }
 
 AnimationArea.prototype.updateZPositions = function() {
-	debugger;
 	var controllersList = $('#objectsList');
 	var objectControllers = controllersList.children();
 	var i;
 	var lastIndex = objectControllers.length -1;
 	for (i= lastIndex; i >= 0; i--) {
 		var objectName = objectControllers[i].innerHTML;
-		var object = this.findAnimatedObject(objectName);
-		console.log(object[0].layerCanvas);
+		//var object = this.findAnimatedObject(objectName);
+		var objectLayer = this.stage.get('.'+objectName+'Layer')[0].moveToTop();
 	}
 }
 

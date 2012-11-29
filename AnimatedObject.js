@@ -10,7 +10,7 @@ function AnimatedObject(name, imageFile) {
 	this.isSelected = false;
 	this.objectController = null;
 	this.imageFile = imageFile;
-	this.layerCanvas = null;
+	this.layer = null;
 	this.canvasElement = null;
 	this.addToAnimatedArea();
 	this.hidden = false;
@@ -30,20 +30,16 @@ AnimatedObject.prototype.addToAnimatedArea = function() {
 	      draggable: false
 	    });
 
-	    var layer = new Kinetic.Layer({
-	    	'name' : this.objectName + 'Layer',
+	    animatedObject.layer = new Kinetic.Layer({
+	    	'name' : animatedObject.objectName + 'Layer'
 	    });
 
 	    // add the shape to the layer
-	    layer.add(kineticImage);
+	    animatedObject.layer.add(kineticImage);
 
 	    // add the layer to the stage
-	    app.animationArea.stage.add(layer);
+	    app.animationArea.stage.add(animatedObject.layer);
 
-	    this.layerCanvas = layer.canvas;
-
-	    debugger;
-	 	
 	 	// save kinetic object to object
 		animatedObject.canvasElement = kineticImage;
 		animatedObject.bindMovementEvents();
