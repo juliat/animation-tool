@@ -125,28 +125,3 @@ AnimatedObject.prototype.recordMovement = function(movement) {
 	var movementTimeKey = movement['time'];
 	this.animation[movementTimeKey] = movement;
 }
-
-/*
-*/
-AnimatedObject.prototype.playAnimation = function() {
-	if (this.animation.length !== 0) {
-		var animation = this.animation;
-		var numMovements = animation.movements.length;
-		var i = 1;
-		while (i < numMovements) {
-			var movement = animation.movements[i];
-			var lastMovement = animation.movements[i-1];
-			var animatedObject = this;
-
-			if (this.paused === false) {
-				// closure to make sure movement var works
-				(function(movement) {
-					setTimeout(function(){
-						animatedObject.performMovement(movement)
-					}, movement['deltaTimestamp']);
-				}(movement));
-			}
-			i++;
-		}
-	}
-}
